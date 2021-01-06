@@ -49,9 +49,8 @@ const RegisterComplete = ({ history }) => {
 
         // redux store dispatch
 
-        console.log("user", user, "id", idTokenResult);
         // redirect
-        // history.push("/");
+        history.push("/");
       }
     } catch (error) {
       console.log(error);

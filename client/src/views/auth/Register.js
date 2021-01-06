@@ -38,6 +38,8 @@ const Register = () => {
           onChange={handleEmailChange}
           autoFocus
         />
+        <br />
+
         <button type="submit" className="btn btn-raised">
           Register
         </button>
