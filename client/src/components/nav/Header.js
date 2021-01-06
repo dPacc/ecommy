@@ -14,7 +14,6 @@ const Header = () => {
   const [current, setCurrent] = useState("");
 
   const handleClick = (e) => {
-    console.log(current);
     setCurrent(e.key);
   };
 
