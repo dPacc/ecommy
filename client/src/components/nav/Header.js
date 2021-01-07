@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 
 import firebase from "firebase/app";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const { SubMenu, Item } = Menu;
@@ -19,6 +19,8 @@ const Header = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [current, setCurrent] = useState("");
+
+  const { user } = useSelector((state) => ({ ...state }));
 
   const handleClick = (e) => {
     setCurrent(e.key);
@@ -39,22 +41,31 @@ const Header = () => {
       <Item key="home" icon={<HomeOutlined />}>
         <Link to="/">Home</Link>
       </Item>
-
-      <Item key="register" icon={<UserAddOutlined />} className="float-right">
-        <Link to="/register">Register</Link>
-      </Item>
-
-      <Item key="login" icon={<LoginOutlined />} className="float-right">
-        <Link to="/login">Login</Link>
-      </Item>
-
-      <SubMenu key="SubMenu" icon={<ProfileOutlined />} title="Profile">
-        <Item key="setting:1">Option 1</Item>
-        <Item key="setting:2">Option 2</Item>
-        <Item icon={<LogoutOutlined />} key="logout" onClick={handleLogout}>
-          Logout
+      {!user && (
+        <Item key="register" icon={<UserAddOutlined />} className="float-right">
+          <Link to="/register">Register</Link>
         </Item>
-      </SubMenu>
+      )}
+      {!user && (
+        <Item key="login" icon={<LoginOutlined />} className="float-right">
+          <Link to="/login">Login</Link>
+        </Item>
+      )}
+
+      {user && (
+        <SubMenu
+          key="SubMenu"
+          icon={<ProfileOutlined />}
+          title={user.email && user.email.split("@")[0]}
+          className="float-right"
+        >
+          <Item key="setting:1">Option 1</Item>
+          <Item key="setting:2">Option 2</Item>
+          <Item icon={<LogoutOutlined />} key="logout" onClick={handleLogout}>
+            Logout
+          </Item>
+        </SubMenu>
+      )}
     </Menu>
   );
 };
