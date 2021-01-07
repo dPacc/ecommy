@@ -22,3 +22,15 @@ exports.createOrUpdateUser = async (req, res) => {
     res.json(newUser);
   }
 };
+
+exports.currentUser = async (req, res) => {
+  const { email } = req.user;
+
+  const user = await User.findOne({ email });
+
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404).json({ error: "User not found" });
+  }
+};
