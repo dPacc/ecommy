@@ -1,6 +1,7 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { useSelector } from "react-redux";
+import LoadingToRedirect from "../LoadingToRedirect";
 
 const UserRoute = ({ children, ...restProps }) => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -10,7 +11,7 @@ const UserRoute = ({ children, ...restProps }) => {
       {user && user.token ? (
         <Route {...restProps} render={children} />
       ) : (
-        <Redirect to="/login" />
+        <LoadingToRedirect />
       )}
     </>
   );
