@@ -14,3 +14,4 @@ export { default as Wishlist } from "./user/Wishlist";
 
 // admin views
 export { default as AdminDashboard } from "./admin/AdminDashboard";
+export { default as CategoryCreate } from "./admin/category/CategoryCreate";
