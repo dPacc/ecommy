@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { createOrUpdateUser } from "../../functions/auth";
+import { createOrUpdateUser } from "../../api/auth";
 
 const RegisterComplete = ({ history }) => {
   const dispatch = useDispatch();

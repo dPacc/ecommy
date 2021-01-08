@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LoadingToRedirect from "../LoadingToRedirect";
-import { currentAdmin } from "../../functions/auth";
+import { currentAdmin } from "../../api/auth";
 
 const AdminRoute = ({ children, ...restProps }) => {
   const { user } = useSelector((state) => ({ ...state }));

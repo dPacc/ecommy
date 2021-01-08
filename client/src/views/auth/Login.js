@@ -5,7 +5,7 @@ import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createOrUpdateUser } from "../../functions/auth";
+import { createOrUpdateUser } from "../../api/auth";
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();

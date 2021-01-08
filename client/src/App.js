@@ -19,7 +19,7 @@ import { Header, UserRoute, AdminRoute } from "./components";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 
-import { currentUser } from "./functions/auth";
+import { currentUser } from "./api/auth";
 
 const App = () => {
   const dispatch = useDispatch();
