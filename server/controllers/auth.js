@@ -26,11 +26,29 @@ exports.createOrUpdateUser = async (req, res) => {
 exports.currentUser = async (req, res) => {
   const { email } = req.user;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).exec();
 
   if (user) {
     res.json(user);
   } else {
     res.status(404).json({ error: "User not found" });
+  }
+};
+
+exports.currentAdmin = async (req, res) => {
+  const { email } = req.user;
+
+  const user = await User.findOne({ email }).exec();
+
+  if (user.role === "admin") {
+    res.json({
+      data: {
+        products: ["car", "laptop", "mobile"],
+      },
+    });
+  } else {
+    res.status(401).json({
+      error: "You are trying to access admin resource. Access Denied",
+    });
   }
 };
