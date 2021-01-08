@@ -11,7 +11,7 @@ const Register = ({ history }) => {
     if (user && user.token) {
       history.push("/");
     }
-  }, [user]);
+  }, [history, user]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
