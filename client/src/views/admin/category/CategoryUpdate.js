@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { AdminNav } from "../../../components";
+import { AdminNav, CategoryForm } from "../../../components";
 import { updateCategory, getCategory } from "../../../api/category";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -12,10 +12,10 @@ const CategoryUpdate = ({ history }) => {
   const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
-    getCatBySlug();
+    loadCategory();
   }, []);
 
-  const getCatBySlug = () => {
+  const loadCategory = () => {
     getCategory(user.token, slug)
       .then((res) => {
         setName(res.data.name);
@@ -42,26 +42,6 @@ const CategoryUpdate = ({ history }) => {
       });
   };
 
-  const categoryForm = () => {
-    return (
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Category name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoFocus
-            required={true}
-          />
-          <br />
-          <button className="btn btn-outline-primary">UPDATE</button>
-        </div>
-      </form>
-    );
-  };
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -70,7 +50,11 @@ const CategoryUpdate = ({ history }) => {
         </div>
         <div className="col">
           {loading ? <h4>...Loading</h4> : <h4>Update Category</h4>}
-          {categoryForm()}
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+          />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AdminNav } from "../../../components";
+import { AdminNav, CategoryForm } from "../../../components";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -69,26 +69,6 @@ const CategoryCreate = () => {
     }
   };
 
-  const categoryForm = () => {
-    return (
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Category name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoFocus
-            required={true}
-          />
-          <br />
-          <button className="btn btn-outline-primary">Create</button>
-        </div>
-      </form>
-    );
-  };
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -97,7 +77,11 @@ const CategoryCreate = () => {
         </div>
         <div className="col">
           {loading ? <h4>...Loading</h4> : <h4>Create Category</h4>}
-          {categoryForm()}
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+          />
           <hr />
           {categories.map((c) => (
             <div className="alert alert-secondary" key={c._id}>
