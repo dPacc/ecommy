@@ -4,3 +4,5 @@ export { default as RegisterComplete } from "./auth/RegisterComplete";
 export { default as ForgotPassword } from "./auth/ForgotPassword";
 export { default as Home } from "./Home";
 export { default as History } from "./user/History";
+export { default as Password } from "./user/Password";
+export { default as Wishlist } from "./user/Wishlist";

@@ -1,17 +1,17 @@
 import React from "react";
 import { UserNav } from "../../components";
 
-const History = () => {
+const Wishlist = () => {
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="colmd-2">
           <UserNav />
         </div>
-        <div className="col">User History Page</div>
+        <div className="col">My Wishlist Page</div>
       </div>
     </div>
   );
 };
 
-export default History;
+export default Wishlist;
