@@ -55,7 +55,6 @@ const CategoryCreate = () => {
       setLoading(true);
       removeCategory(user.token, slug)
         .then((res) => {
-          console.log(res);
           setLoading(false);
           toast.success(`${res.data.name} deleted`);
           loadCategories();

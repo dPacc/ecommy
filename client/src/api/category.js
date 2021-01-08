@@ -30,7 +30,7 @@ export const createCategory = async (authtoken, name) => {
 export const updateCategory = async (authtoken, slug, newName) => {
   return await axios.put(
     `${process.env.REACT_APP_BACKEND_API}/category/${slug}`,
-    { newName },
+    newName,
     {
       headers: {
         authtoken,

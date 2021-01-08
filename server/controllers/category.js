@@ -50,7 +50,7 @@ exports.update = async (req, res) => {
     res.json(categoryUpdated);
   } catch (error) {
     console.log(error);
-    res.status(400).send("Create update failed");
+    res.status(400).send("Category update failed");
   }
 };
 

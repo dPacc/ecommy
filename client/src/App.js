@@ -14,6 +14,7 @@ import {
   Wishlist,
   AdminDashboard,
   CategoryCreate,
+  CategoryUpdate,
 } from "./views";
 import { Header, UserRoute, AdminRoute } from "./components";
 
@@ -69,6 +70,11 @@ const App = () => {
         {/* admin routes */}
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />
+        <AdminRoute
+          exact
+          path="/admin/category/:slug"
+          component={CategoryUpdate}
+        />
       </Switch>
     </>
   );
