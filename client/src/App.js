@@ -15,6 +15,7 @@ import {
   AdminDashboard,
   CategoryCreate,
   CategoryUpdate,
+  SubcategoryCreate,
 } from "./views";
 import { Header, UserRoute, AdminRoute } from "./components";
 
@@ -74,6 +75,11 @@ const App = () => {
           exact
           path="/admin/category/:slug"
           component={CategoryUpdate}
+        />
+        <AdminRoute
+          exact
+          path="/admin/subcategory"
+          component={SubcategoryCreate}
         />
       </Switch>
     </>

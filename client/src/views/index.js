@@ -16,3 +16,4 @@ export { default as Wishlist } from "./user/Wishlist";
 export { default as AdminDashboard } from "./admin/AdminDashboard";
 export { default as CategoryCreate } from "./admin/category/CategoryCreate";
 export { default as CategoryUpdate } from "./admin/category/CategoryUpdate";
+export { default as SubcategoryCreate } from "./admin/subcategory/SubcategoryCreate";
