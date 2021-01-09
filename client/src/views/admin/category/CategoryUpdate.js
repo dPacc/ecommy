@@ -13,10 +13,11 @@ const CategoryUpdate = ({ history }) => {
 
   useEffect(() => {
     loadCategory();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadCategory = () => {
-    getCategory(user.token, slug).then((res) => {
+    getCategory(slug).then((res) => {
       setName(res.data.name);
     });
   };

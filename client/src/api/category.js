@@ -4,14 +4,9 @@ export const getCategories = async () => {
   return await axios.get(`${process.env.REACT_APP_BACKEND_API}/categories`);
 };
 
-export const getCategory = async (authtoken, slug) => {
+export const getCategory = async (slug) => {
   return await axios.get(
-    `${process.env.REACT_APP_BACKEND_API}/category/${slug}`,
-    {
-      headers: {
-        authtoken,
-      },
-    }
+    `${process.env.REACT_APP_BACKEND_API}/category/${slug}`
   );
 };
 
