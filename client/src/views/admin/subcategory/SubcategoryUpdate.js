@@ -35,7 +35,7 @@ const SubcategoryUpdate = ({ history }) => {
     getSubcategory(slug).then((res) => {
       setName(res.data.name);
       setCategory(res.data.parent);
-      //   console.log(name);
+      //   console.log(res);
     });
   };
 
@@ -43,12 +43,12 @@ const SubcategoryUpdate = ({ history }) => {
     e.preventDefault();
     setLoading(true);
 
-    updateSubcategory(user.token, slug, { name, category })
+    updateSubcategory(user.token, slug, { name, parent: category })
       .then((res) => {
         setLoading(false);
         toast.success(`"${res.data.name}" is updated`);
         history.push("/admin/subcategory");
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         setLoading(false);
