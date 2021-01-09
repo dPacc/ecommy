@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AdminNav, CategoryForm } from "../../../components";
+import { AdminNav, CategoryForm, LocalSearch } from "../../../components";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -70,11 +70,6 @@ const CategoryCreate = () => {
     }
   };
 
-  const handleSearchChange = (e) => {
-    e.preventDefault();
-    setKeyword(e.target.value);
-  };
-
   const filteredItems = categories.filter((item) =>
     item.name.toLocaleLowerCase().includes(keyword)
   );
@@ -94,14 +89,8 @@ const CategoryCreate = () => {
             name={name}
             setName={setName}
           />
-          <input
-            type="search"
-            placeholder="Search"
-            value={keyword}
-            onChange={handleSearchChange}
-            className="form-control mb-4"
-          />
-          <hr />
+          <LocalSearch keyword={keyword} setKeyword={setKeyword} />
+
           {categoriesToDisplay.map((c) => (
             <div className="alert alert-secondary" key={c._id}>
               {c.name}
