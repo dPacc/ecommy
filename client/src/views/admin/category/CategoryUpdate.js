@@ -16,13 +16,9 @@ const CategoryUpdate = ({ history }) => {
   }, []);
 
   const loadCategory = () => {
-    getCategory(user.token, slug)
-      .then((res) => {
-        setName(res.data.name);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    getCategory(user.token, slug).then((res) => {
+      setName(res.data.name);
+    });
   };
 
   const handleSubmit = (e) => {
