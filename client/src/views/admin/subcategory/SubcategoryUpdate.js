@@ -43,7 +43,7 @@ const SubcategoryUpdate = ({ history }) => {
     e.preventDefault();
     setLoading(true);
 
-    updateSubcategory(user.token, slug, { name, parent: category })
+    updateSubcategory(user.token, slug, name, category)
       .then((res) => {
         setLoading(false);
         toast.success(`"${res.data.name}" is updated`);
