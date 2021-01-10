@@ -18,7 +18,6 @@ exports.list = async (req, res) => {
     const products = await Product.find({}).sort({ createdAt: -1 }).exec();
     if (products) {
       res.json(products);
-      console.log(products);
     }
   } catch (error) {
     res.status(404).send("No products found");
@@ -26,17 +25,9 @@ exports.list = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  const { title, description, price, category, subcategories } = req.body;
-
   try {
-    const product = await new Product({
-      title,
-      slug: slugify(title),
-      description,
-      price,
-      category,
-      subcategories,
-    }).save();
+    req.body.slug = slugify(req.body.title);
+    const product = await new Product(req.body).save();
     res.json(product);
   } catch (error) {
     console.log(error);
@@ -46,19 +37,11 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { slug } = req.params;
-  const { title, description, price, category, subcategories } = req.body;
-
   try {
+    req.body.slug = slugify(req.body.title);
     const updatedProduct = await Product.findOneAndUpdate(
       { slug },
-      {
-        title,
-        slug: slugify(title),
-        description,
-        price,
-        category,
-        subcategories,
-      }
+      req.body
     ).exec();
     res.json(updatedProduct);
   } catch (error) {
