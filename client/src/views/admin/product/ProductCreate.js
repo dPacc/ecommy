@@ -65,7 +65,8 @@ const ProductCreate = () => {
         console.log(res.data);
       })
       .catch((error) => {
-        if (error.response.status === 400) toast.error(error.response.data);
+        // if (error.response.status === 400) toast.error(error.response.data);
+        toast.error(error.response.data.err);
         console.log(error);
       });
   };
@@ -167,6 +168,7 @@ const ProductCreate = () => {
                 className="form-control"
                 onChange={handleChange}
               >
+                <option value="">Please Select</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </select>
