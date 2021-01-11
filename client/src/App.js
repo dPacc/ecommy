@@ -17,6 +17,7 @@ import {
   CategoryUpdate,
   SubcategoryCreate,
   SubcategoryUpdate,
+  ProductCreate,
 } from "./views";
 import { Header, UserRoute, AdminRoute } from "./components";
 
@@ -87,6 +88,7 @@ const App = () => {
           path="/admin/subcategory/:slug"
           component={SubcategoryUpdate}
         />
+        <AdminRoute exact path="/admin/product" component={ProductCreate} />
       </Switch>
     </>
   );
