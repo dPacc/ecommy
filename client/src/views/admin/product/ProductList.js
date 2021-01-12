@@ -26,6 +26,9 @@ const ProductList = () => {
         <>
           <h4>{p.title}</h4>
           <p>{p.description}</p>
+          <p>
+            {p.category ? <p>Yes - {p.category} </p> : <p>No</p>} Category ID
+          </p>
           <p>{p.brand}</p>
           <p>{p.color}</p>
           <p>{p.shipping}</p>

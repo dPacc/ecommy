@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AdminNav, ProductCreateForm } from "../../../components";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -26,25 +26,10 @@ const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
   const { user } = useSelector((state) => ({ ...state }));
 
-  const {
-    title,
-    description,
-    price,
-    categories,
-    category,
-    subcategories,
-    shipping,
-    quantity,
-    images,
-    colors,
-    brands,
-    color,
-    brand,
-  } = values;
-
-  //   useEffect(() => {
-  //     loadCategories();
-  //   }, []);
+  useEffect(() => {
+    loadCategories();
+    console.log(values);
+  }, []);
 
   //   useEffect(() => {
   //     loadSubcategories();
@@ -60,7 +45,6 @@ const ProductCreate = () => {
     createProduct(user.token, { ...values })
       .then((res) => {
         toast.success(`"${res.data.title}" is created`);
-        console.log(res.data);
       })
       .catch((error) => {
         // if (error.response.status === 400) toast.error(error.response.data);

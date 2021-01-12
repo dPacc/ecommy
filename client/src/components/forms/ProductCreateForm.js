@@ -41,6 +41,23 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
       </div>
 
       <div className="form-group">
+        <label>Category</label>
+        <select
+          name="category"
+          className="form-control"
+          onChange={handleChange}
+        >
+          <option>Select Category</option>
+          {categories.length &&
+            categories.map((c) => (
+              <option key={c._id} value={c._id}>
+                {c.name}
+              </option>
+            ))}
+        </select>
+      </div>
+
+      <div className="form-group">
         <label>Price</label>
         <input
           type="number"
