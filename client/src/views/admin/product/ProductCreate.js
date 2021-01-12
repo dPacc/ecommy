@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getCategories } from "../../../api/category";
 import { createProduct } from "../../../api/product";
-import { getSubcategories } from "../../../api/subcategory";
+import { getCategorySubs } from "../../../api/category";
 
 const initialState = {
   title: "",
@@ -24,20 +24,27 @@ const initialState = {
 
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
+  const [subOptions, setSubOptions] = useState([]);
+  const [showSub, setShowSub] = useState(false);
   const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
     loadCategories();
-    console.log(values);
   }, []);
 
-  //   useEffect(() => {
-  //     loadSubcategories();
-  //   }, []);
-
   const handleChange = (e) => {
+    e.preventDefault();
     setValues({ ...values, [e.target.name]: e.target.value });
-    console.log({ ...values, [e.target.name]: e.target.value });
+    // console.log({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const handleCatChange = (e) => {
+    e.preventDefault();
+    setValues({ ...values, subcategories: [], category: e.target.value });
+    setShowSub(true);
+    getCategorySubs(e.target.value).then((res) => {
+      setSubOptions(res.data);
+    });
   };
 
   const handleSubmit = (e) => {
@@ -59,10 +66,9 @@ const ProductCreate = () => {
     });
   };
 
-  const loadSubcategories = () => {
-    getSubcategories().then((res) => {
-      setValues({ ...values, subcategories: res.data });
-    });
+  const handleSetSubs = (value) => {
+    // e.preventDefault();
+    setValues({ ...values, subcategories: value });
   };
 
   return (
@@ -77,42 +83,12 @@ const ProductCreate = () => {
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
+            handleCatChange={handleCatChange}
             values={values}
+            subOptions={subOptions}
+            handleSetSubs={handleSetSubs}
+            showSub={showSub}
           />
-
-          {/* <div className="form-group">
-              <label>Category</label>
-              <select
-                name="category"
-                className="form-control"
-                onChange={handleChange}
-              >
-                <option>Select Category</option>
-                {categories.length &&
-                  categories.map((c) => (
-                    <option key={c._id} value={c._id}>
-                      {c.name}
-                    </option>
-                  ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Sub Category</label>
-              <select
-                name="subcategory"
-                className="form-control"
-                onChange={handleChange}
-              >
-                <option>Select Sub Category</option>
-                {subcategories.length &&
-                  subcategories.map((c) => (
-                    <option key={c._id} value={c._id}>
-                      {c.name}
-                    </option>
-                  ))}
-              </select>
-            </div> */}
         </div>
       </div>
     </div>

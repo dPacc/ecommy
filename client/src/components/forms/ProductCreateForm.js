@@ -1,6 +1,17 @@
 import React from "react";
+import { Select } from "antd";
 
-const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
+const { Option } = Select;
+
+const ProductCreateForm = ({
+  handleSubmit,
+  handleChange,
+  handleCatChange,
+  values,
+  subOptions,
+  handleSetSubs,
+  showSub,
+}) => {
   const {
     title,
     description,
@@ -38,23 +49,6 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
           value={description}
           onChange={handleChange}
         />
-      </div>
-
-      <div className="form-group">
-        <label>Category</label>
-        <select
-          name="category"
-          className="form-control"
-          onChange={handleChange}
-        >
-          <option>Select Category</option>
-          {categories.length &&
-            categories.map((c) => (
-              <option key={c._id} value={c._id}>
-                {c.name}
-              </option>
-            ))}
-        </select>
       </div>
 
       <div className="form-group">
@@ -117,6 +111,47 @@ const ProductCreateForm = ({ handleSubmit, handleChange, values }) => {
           ))}
         </select>
       </div>
+
+      <div className="form-group">
+        <label>Category</label>
+        <select
+          name="category"
+          className="form-control"
+          onChange={handleCatChange}
+          select={false}
+        >
+          <option>Select Category</option>
+          {categories.length &&
+            categories.map((c) => (
+              <option key={c._id} value={c._id}>
+                {c.name}
+              </option>
+            ))}
+        </select>
+      </div>
+
+      {showSub && (
+        <div className="form-group">
+          <label>Sub Category</label>
+          <Select
+            mode="multiple"
+            style={{ width: "100%" }}
+            placeholder="Please Select"
+            value={subcategories}
+            name="subcategories"
+            onChange={handleSetSubs}
+          >
+            {subOptions.length &&
+              subOptions.map((c) => (
+                <Option key={c._id} value={c._id}>
+                  {c.name}
+                </Option>
+              ))}
+          </Select>
+        </div>
+      )}
+
+      <br />
 
       <button className="btn btn-outline-info">Save</button>
     </form>

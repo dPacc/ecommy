@@ -67,17 +67,11 @@ exports.remove = async (req, res) => {
   }
 };
 
-exports.getSubs = async (req, res) => {
+exports.getSubs = (req, res) => {
   const { id } = req.params;
 
-  try {
-    const subs = await Subcategory.find({ parent: id }).exec();
+  Subcategory.find({ parent: id }).exec((err, subs) => {
+    if (err) console.log(err);
     res.json(subs);
-    console.log(subs);
-  } catch (error) {
-    console.log(error);
-    res.status(404).json({
-      err: error.message,
-    });
-  }
+  });
 };
