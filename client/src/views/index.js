@@ -19,4 +19,4 @@ export { default as CategoryUpdate } from "./admin/category/CategoryUpdate";
 export { default as SubcategoryCreate } from "./admin/subcategory/SubcategoryCreate";
 export { default as SubcategoryUpdate } from "./admin/subcategory/SubcategoryUpdate";
 export { default as ProductCreate } from "./admin/product/ProductCreate";
-export { default as ProductList } from "./admin/product/ProductList";
+export { default as AllProducts } from "./admin/product/AllProducts";
