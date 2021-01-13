@@ -14,8 +14,15 @@ exports.read = async (req, res) => {
 };
 
 exports.list = async (req, res) => {
+  const { count } = req.params;
+
   try {
-    const products = await Product.find({}).sort({ createdAt: -1 }).exec();
+    const products = await Product.find({})
+      .limit(parseInt(count))
+      .populate("category")
+      .populate("subcategories")
+      .sort({ createdAt: -1 })
+      .exec();
     if (products) {
       res.json(products);
     }
