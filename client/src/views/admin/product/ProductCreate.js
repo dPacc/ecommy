@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AdminNav, ProductCreateForm } from "../../../components";
+import { AdminNav, ProductCreateForm, FileUpload } from "../../../components";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getCategories } from "../../../api/category";
@@ -80,6 +80,9 @@ const ProductCreate = () => {
         <div className="col-md-10">
           <h4>Create Product</h4>
           <hr />
+          <div className="p-3">
+            <FileUpload />
+          </div>
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}

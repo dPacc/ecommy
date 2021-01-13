@@ -6,3 +6,4 @@ export { default as AdminNav } from "./nav/AdminNav";
 export { default as CategoryForm } from "./forms/CategoryForm";
 export { default as LocalSearch } from "./forms/LocalSearch";
 export { default as ProductCreateForm } from "./forms/ProductCreateForm";
+export { default as FileUpload } from "./forms/FileUpload";
