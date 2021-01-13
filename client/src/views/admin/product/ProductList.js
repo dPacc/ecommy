@@ -30,6 +30,7 @@ const ProductList = () => {
             {p.category ? <p>Yes - {p.category} </p> : <p>No</p>} Category ID
           </p>
           <p>{p.brand}</p>
+          <img src={p.images} />
           <p>{p.color}</p>
           <p>{p.shipping}</p>
         </>

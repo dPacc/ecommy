@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { getCategories } from "../../../api/category";
 import { createProduct } from "../../../api/product";
 import { getCategorySubs } from "../../../api/category";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const initialState = {
   title: "",
@@ -79,7 +80,11 @@ const ProductCreate = () => {
           <AdminNav />
         </div>
         <div className="col-md-10">
-          <h4>Create Product</h4>
+          {loading ? (
+            <LoadingOutlined className="text-danger h1" />
+          ) : (
+            <h4>Create Product</h4>
+          )}
           <hr />
           <div className="p-3">
             <FileUpload
