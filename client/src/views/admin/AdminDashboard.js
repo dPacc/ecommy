@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AdminNav } from "../../components";
+import { AdminNav, AdminProductCard } from "../../components";
 import { getProductsByCount } from "../../api/product";
 
 const AdminDashboard = () => {
@@ -29,9 +29,16 @@ const AdminDashboard = () => {
         <div className="colmd-2">
           <AdminNav />
         </div>
-        {loading ? <h4>Loading...</h4> : <h4>All Products</h4>}
-        <div className="col">Admin Dashboard</div>
-        {JSON.stringify(products)}
+        <div className="col">
+          {loading ? <h4>Loading...</h4> : <h4>All Products</h4>}
+          <div className="row">
+            {products.map((p) => (
+              <div className="col-md-4" key={p._id}>
+                <AdminProductCard product={p} />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
