@@ -17,3 +17,14 @@ export const getProductsByCount = async (count) => {
     `${process.env.REACT_APP_BACKEND_API}/products/${count}`
   );
 };
+
+export const deleteProduct = async (authtoken, slug) => {
+  return await axios.delete(
+    `${process.env.REACT_APP_BACKEND_API}/product/${slug}`,
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { AdminNav, AdminProductCard } from "../../../components";
-import { getProductsByCount } from "../../../api/product";
+import { getProductsByCount, deleteProduct } from "../../../api/product";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
     loadAllProducts();
@@ -23,6 +26,20 @@ const AllProducts = () => {
       });
   };
 
+  const handleRemove = (slug) => {
+    if (window.confirm("Delete?")) {
+      deleteProduct(user.token, slug)
+        .then((res) => {
+          loadAllProducts();
+          toast.error(`${res.data.title} is deleted`);
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.status.code === 400) toast.error(error.response.data);
+        });
+    }
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -34,7 +51,7 @@ const AllProducts = () => {
           <div className="row">
             {products.map((p) => (
               <div className="col-md-4 pb-3" key={p._id}>
-                <AdminProductCard product={p} />
+                <AdminProductCard product={p} handleRemove={handleRemove} />
               </div>
             ))}
           </div>
