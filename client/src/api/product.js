@@ -34,3 +34,15 @@ export const getProduct = async (slug) => {
     `${process.env.REACT_APP_BACKEND_API}/product/${slug}`
   );
 };
+
+export const updateProduct = async (authtoken, slug, product) => {
+  return await axios.put(
+    `${process.env.REACT_APP_BACKEND_API}/product/${slug}`,
+    product,
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};
