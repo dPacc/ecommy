@@ -52,10 +52,9 @@ exports.update = async (req, res) => {
   const { slug } = req.params;
   try {
     req.body.slug = slugify(req.body.title);
-    const updatedProduct = await Product.findOneAndUpdate(
-      { slug },
-      req.body
-    ).exec();
+    const updatedProduct = await Product.findOneAndUpdate({ slug }, req.body, {
+      new: true,
+    }).exec();
     res.json(updatedProduct);
   } catch (error) {
     console.log(error);
