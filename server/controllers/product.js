@@ -4,7 +4,10 @@ const slugify = require("slugify");
 exports.read = async (req, res) => {
   const { slug } = req.params;
 
-  const product = await Product.findOne({ slug }).exec();
+  const product = await Product.findOne({ slug })
+    .populate("category")
+    .populate("subcategories")
+    .exec();
 
   if (product) {
     res.json(product);
