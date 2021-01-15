@@ -20,3 +20,4 @@ export { default as SubcategoryCreate } from "./admin/subcategory/SubcategoryCre
 export { default as SubcategoryUpdate } from "./admin/subcategory/SubcategoryUpdate";
 export { default as ProductCreate } from "./admin/product/ProductCreate";
 export { default as AllProducts } from "./admin/product/AllProducts";
+export { default as ProductUpdate } from "./admin/product/ProductUpdate";
