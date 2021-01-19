@@ -16,7 +16,7 @@ exports.read = async (req, res) => {
   }
 };
 
-exports.list = async (req, res) => {
+exports.listAll = async (req, res) => {
   const { count } = req.params;
 
   try {
@@ -30,6 +30,7 @@ exports.list = async (req, res) => {
       res.json(products);
     }
   } catch (error) {
+    console.log(error);
     res.status(404).send("No products found");
   }
 };
@@ -73,5 +74,24 @@ exports.remove = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).send("Delete product failed");
+  }
+};
+
+exports.list = async (req, res) => {
+  // sort: createdAt/updatedAt, order: desc/asc, limit: 3..
+  const { sort, order, limit } = req.body;
+
+  try {
+    const products = Product.find({})
+      .populate("category")
+      .populate("subcategories")
+      .sort([[sort, order]])
+      .limit(limit)
+      .exec();
+
+    res.json(products);
+  } catch (error) {
+    console.log(error);
+    res.status(404).send("No products found");
   }
 };
