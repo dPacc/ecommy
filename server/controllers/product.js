@@ -95,3 +95,8 @@ exports.list = async (req, res) => {
     res.status(404).send("No products found");
   }
 };
+
+exports.productsCount = async (req, res) => {
+  const total = await Product.find({}).estimatedDocumentCount().exec();
+  res.json(total);
+};
