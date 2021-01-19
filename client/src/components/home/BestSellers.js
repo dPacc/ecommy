@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getProducts } from "../../api/product";
 import { ProductCard, LoadingCard } from "../../components";
 
-const NewArrivals = () => {
+const BestSellers = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -13,7 +13,7 @@ const NewArrivals = () => {
   const loadAllProducts = () => {
     setLoading(true);
     // sort, order, limit
-    getProducts("createdAt", "desc", 3).then((res) => {
+    getProducts("sold", "desc", 3).then((res) => {
       setProducts(res.data);
       setLoading(false);
     });
@@ -38,4 +38,4 @@ const NewArrivals = () => {
   );
 };
 
-export default NewArrivals;
+export default BestSellers;

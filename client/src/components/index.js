@@ -14,3 +14,4 @@ export { default as Jumbotron } from "./cards/Jumbotron";
 export { default as LoadingCard } from "./cards/LoadingCard";
 
 export { default as NewArrivals } from "./home/NewArrivals";
+export { default as BestSellers } from "./home/BestSellers";
