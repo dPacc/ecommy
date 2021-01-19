@@ -10,3 +10,4 @@ export { default as FileUpload } from "./forms/FileUpload";
 export { default as AdminProductCard } from "./cards/AdminProductCard";
 export { default as ProductUpdateForm } from "./forms/ProductUpdateForm";
 export { default as ProductCard } from "./cards/ProductCard";
+export { default as Jumbotron } from "./cards/Jumbotron";
