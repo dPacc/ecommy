@@ -12,3 +12,5 @@ export { default as ProductUpdateForm } from "./forms/ProductUpdateForm";
 export { default as ProductCard } from "./cards/ProductCard";
 export { default as Jumbotron } from "./cards/Jumbotron";
 export { default as LoadingCard } from "./cards/LoadingCard";
+
+export { default as NewArrivals } from "./home/NewArrivals";
