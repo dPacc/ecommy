@@ -43,12 +43,15 @@ const NewArrivals = () => {
           </div>
         )}
       </div>
-      <Pagination
-        current={page}
-        total={(productsCount / 3) * 10}
-        onChange={(val) => setPage(val)}
-        className=""
-      />
+      <div className="row">
+        <nav className="col-md-4 offset-md-4 text-center pt-5 p-3">
+          <Pagination
+            current={page}
+            total={(productsCount / 3) * 10}
+            onChange={(val) => setPage(val)}
+          />
+        </nav>
+      </div>
     </>
   );
 };
