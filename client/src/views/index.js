@@ -6,6 +6,7 @@ export { default as ForgotPassword } from "./auth/ForgotPassword";
 
 // common views
 export { default as Home } from "./Home";
+export { default as Product } from "./Product";
 
 // user views
 export { default as History } from "./user/History";
