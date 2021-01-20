@@ -77,16 +77,38 @@ exports.remove = async (req, res) => {
   }
 };
 
+// exports.list = async (req, res) => {
+//   // sort: createdAt/updatedAt, order: desc/asc, limit: 3..
+//   const { sort, order, limit } = req.body;
+
+//   try {
+//     const products = await Product.find({})
+//       .populate("category")
+//       .populate("subcategories")
+//       .sort([[sort, order]])
+//       .limit(limit)
+//       .exec();
+
+//     res.json(products);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(404).send("No products found");
+//   }
+// };
+
 exports.list = async (req, res) => {
   // sort: createdAt/updatedAt, order: desc/asc, limit: 3..
-  const { sort, order, limit } = req.body;
+  const { sort, order, page } = req.body;
+  const currentPage = page || 1;
+  const perPage = 3;
 
   try {
     const products = await Product.find({})
+      .skip((currentPage - 1) * perPage)
       .populate("category")
       .populate("subcategories")
       .sort([[sort, order]])
-      .limit(limit)
+      .limit(perPage)
       .exec();
 
     res.json(products);
