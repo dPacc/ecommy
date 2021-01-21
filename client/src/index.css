@@ -1,4 +1,5 @@
-.slide img {
+.slide img,
+card-image {
   height: 750px;
   object-fit: cover;
 }
