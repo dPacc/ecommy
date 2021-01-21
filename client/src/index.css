@@ -1,0 +1,4 @@
+.slide img {
+  height: 750px;
+  object-fit: cover;
+}
