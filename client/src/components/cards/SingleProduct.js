@@ -8,6 +8,9 @@ import Laptop from "../../images/laptop.png";
 import ProductListItems from "./ProductListItems";
 import StarRatings from "react-star-ratings";
 
+// modal component
+import RatingModal from "../modal/RatingModal";
+
 const { TabPane } = Tabs;
 
 const SingleProduct = ({ product }) => {
@@ -47,14 +50,6 @@ const SingleProduct = ({ product }) => {
 
       <div className="col-md-5">
         <h1 className="bg-info p-3">{title}</h1>
-        <StarRatings
-          starRatedColor="gold"
-          numberOfStars={5}
-          changeRating={changeRating}
-          rating={rating}
-          name={_id}
-          isSelectable={true}
-        />
 
         <Card
           actions={[
@@ -65,6 +60,16 @@ const SingleProduct = ({ product }) => {
             <Link to={`/product/wishlist`}>
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
             </Link>,
+            <RatingModal>
+              <StarRatings
+                starRatedColor="gold"
+                numberOfStars={5}
+                changeRating={changeRating}
+                rating={rating}
+                name={_id}
+                isSelectable={true}
+              />
+            </RatingModal>,
           ]}
         >
           <ProductListItems product={product} />
