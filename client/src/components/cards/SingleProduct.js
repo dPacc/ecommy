@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, Tabs } from "antd";
 import { Link } from "react-router-dom";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
@@ -13,15 +13,8 @@ import RatingModal from "../modal/RatingModal";
 
 const { TabPane } = Tabs;
 
-const SingleProduct = ({ product }) => {
+const SingleProduct = ({ product, star, handleChangeRating }) => {
   const { title, images, description, _id } = product;
-  const [rating, setRating] = useState(0);
-
-  const changeRating = (newRating, name) => {
-    console.log(newRating);
-    console.log(name);
-    setRating(newRating);
-  };
 
   return (
     <>
@@ -64,8 +57,8 @@ const SingleProduct = ({ product }) => {
               <StarRatings
                 starRatedColor="gold"
                 numberOfStars={5}
-                changeRating={changeRating}
-                rating={rating}
+                changeRating={handleChangeRating}
+                rating={star}
                 name={_id}
                 isSelectable={true}
               />
