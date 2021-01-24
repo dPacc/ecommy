@@ -32,7 +32,7 @@ const initialState = {
   brand: "",
 };
 
-const ProductCreate = () => {
+const ProductCreate = ({ history }) => {
   const [values, setValues] = useState(initialState);
   const [subOptions, setSubOptions] = useState([]);
   const [showSub, setShowSub] = useState(false);
@@ -63,6 +63,7 @@ const ProductCreate = () => {
     createProduct(user.token, { ...values })
       .then((res) => {
         toast.success(`"${res.data.title}" is created`);
+        history.push("/admin/products");
       })
       .catch((error) => {
         // if (error.response.status === 400) toast.error(error.response.data);
