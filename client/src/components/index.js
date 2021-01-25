@@ -17,3 +17,5 @@ export { default as NewArrivals } from "./home/NewArrivals";
 export { default as BestSellers } from "./home/BestSellers";
 
 export { default as SingleProduct } from "./cards/SingleProduct";
+
+export { default as CategoryList } from "./category/CategoryList";
