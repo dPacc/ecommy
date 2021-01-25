@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getProduct, updateProductRating } from "../api/product";
-import { SingleProduct } from "../components";
+import { getProduct, updateProductRating, listRelated } from "../api/product";
+import { SingleProduct, ProductCard } from "../components";
 import { useSelector } from "react-redux";
 
 const Product = () => {
   const [product, setProduct] = useState("");
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [star, setStar] = useState(0);
   const { slug } = useParams();
   const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
     loadSingleProduct();
-  }, []);
+  }, [slug]);
 
   useEffect(() => {
     if (product.ratings && user) {
@@ -26,6 +27,10 @@ const Product = () => {
   const loadSingleProduct = () => {
     getProduct(slug).then((res) => {
       setProduct(res.data);
+      // Load related product
+      listRelated(res.data._id).then((res) => {
+        setRelatedProducts(res.data);
+      });
     });
   };
 
@@ -52,6 +57,18 @@ const Product = () => {
           <h4>Related Products</h4>
           <hr />
         </div>
+      </div>
+
+      <div className="row pb-5">
+        {relatedProducts.length ? (
+          relatedProducts.map((relProd) => (
+            <div key={relProd._id} className="col-md-4">
+              <ProductCard product={relProd} />
+            </div>
+          ))
+        ) : (
+          <div className="text-center col">NO RELATED PRODUCTS FOUND</div>
+        )}
       </div>
     </div>
   );
