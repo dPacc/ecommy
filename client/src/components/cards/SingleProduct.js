@@ -7,6 +7,7 @@ import { Carousel } from "react-responsive-carousel";
 import Laptop from "../../images/laptop.png";
 import ProductListItems from "./ProductListItems";
 import StarRatings from "react-star-ratings";
+import { showAverage } from "../../api/rating";
 
 // modal component
 import RatingModal from "../modal/RatingModal";
@@ -43,6 +44,9 @@ const SingleProduct = ({ product, star, handleChangeRating }) => {
 
       <div className="col-md-5">
         <h1 className="bg-info p-3">{title}</h1>
+        {product && product.ratings && product.ratings.length
+          ? showAverage(product)
+          : "No ratings yet"}
 
         <Card
           actions={[
