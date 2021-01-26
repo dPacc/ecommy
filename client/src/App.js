@@ -21,6 +21,7 @@ import {
   ProductCreate,
   AllProducts,
   ProductUpdate,
+  CategoryHome,
 } from "./views";
 import { Header, UserRoute, AdminRoute } from "./components";
 
@@ -69,7 +70,6 @@ const App = () => {
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
-        <Route exact path="/product/:slug" component={Product} />
         {/* user routes */}
         <UserRoute exact path="/user/history" component={History} />
         <UserRoute exact path="/user/password" component={Password} />
@@ -99,6 +99,9 @@ const App = () => {
           path="/admin/product/:slug"
           component={ProductUpdate}
         />
+        {/* Common Routes */}
+        <Route exact path="/product/:slug" component={Product} />
+        <Route exact path="/category/:slug" component={CategoryHome} />
       </Switch>
     </>
   );
