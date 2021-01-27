@@ -5,7 +5,6 @@ const ProductListItems = ({ product }) => {
   const {
     price,
     category,
-    slug,
     subcategories,
     shipping,
     color,
@@ -13,7 +12,6 @@ const ProductListItems = ({ product }) => {
     quantity,
     sold,
   } = product;
-  console.log(product);
   return (
     <ul className="list-group">
       <li className="list-group-item">
@@ -39,7 +37,7 @@ const ProductListItems = ({ product }) => {
           {subcategories.map((sub) => (
             <Link
               key={sub._id}
-              to={`/subcategories/${sub.slug}`}
+              to={`/subcategory/${sub && sub.slug}`}
               className="label label-default label-pill pull-xs-right"
             >
               {sub.name}

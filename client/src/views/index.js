@@ -8,6 +8,7 @@ export { default as ForgotPassword } from "./auth/ForgotPassword";
 export { default as Home } from "./Home";
 export { default as Product } from "./Product";
 export { default as CategoryHome } from "./category/CategoryHome";
+export { default as SubcategoryHome } from "./subcategory/SubcategoryHome";
 
 // user views
 export { default as History } from "./user/History";

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getCategory } from "../../api/category";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ProductCard } from "../../components";
 
 const CategoryHome = () => {

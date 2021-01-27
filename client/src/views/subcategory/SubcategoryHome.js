@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getSubcategory } from "../../api/subcategory";
-import { Link, useParams } from "react-router-dom";
 import { ProductCard } from "../../components";
+import { useParams } from "react-router-dom";
 
 const SubcategoryHome = () => {
   const { slug } = useParams();
@@ -13,7 +13,7 @@ const SubcategoryHome = () => {
     setLoading(true);
     getSubcategory(slug)
       .then((res) => {
-        setSubcategory(res.data.category);
+        setSubcategory(res.data.subcategory);
         setProducts(res.data.products);
         setLoading(false);
       })
@@ -25,7 +25,7 @@ const SubcategoryHome = () => {
 
   return (
     <div className="container-fluid">
-      {/* <div className="row">
+      <div className="row">
         <div className="col">
           {loading ? (
             <h4 className="text-center jumbotron p-3 mt-5 mb-5 display-4">
@@ -34,7 +34,7 @@ const SubcategoryHome = () => {
           ) : (
             <h4 className="text-center jumbotron p-3 mt-5 mb-5 display-4">
               {products.length} Products in "{subcategory && subcategory.name}"
-              category
+              sub - category
             </h4>
           )}
         </div>
@@ -46,8 +46,7 @@ const SubcategoryHome = () => {
             <ProductCard product={p} />
           </div>
         ))}
-      </div> */}
-      {slug}
+      </div>
     </div>
   );
 };

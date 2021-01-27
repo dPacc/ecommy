@@ -22,6 +22,7 @@ import {
   AllProducts,
   ProductUpdate,
   CategoryHome,
+  SubcategoryHome,
 } from "./views";
 import { Header, UserRoute, AdminRoute } from "./components";
 
@@ -102,6 +103,7 @@ const App = () => {
         {/* Common Routes */}
         <Route exact path="/product/:slug" component={Product} />
         <Route exact path="/category/:slug" component={CategoryHome} />
+        <Route exact path="/subcategory/:slug" component={SubcategoryHome} />
       </Switch>
     </>
   );

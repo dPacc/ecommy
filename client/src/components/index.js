@@ -19,3 +19,4 @@ export { default as BestSellers } from "./home/BestSellers";
 export { default as SingleProduct } from "./cards/SingleProduct";
 
 export { default as CategoryList } from "./category/CategoryList";
+export { default as SubcategoryList } from "./subcategory/SubcategoryList";
