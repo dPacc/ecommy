@@ -13,6 +13,7 @@ const ProductListItems = ({ product }) => {
     quantity,
     sold,
   } = product;
+  console.log(product);
   return (
     <ul className="list-group">
       <li className="list-group-item">
@@ -25,7 +26,7 @@ const ProductListItems = ({ product }) => {
       <li className="list-group-item">
         Category
         <Link
-          to={`/category/`}
+          to={`/category/${category && category.name}`}
           className="label label-default label-pill pull-xs-right"
         >
           {category && category.name}
