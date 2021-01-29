@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getProductsByCount } from "../api/product";
+import { getProductsByCount, searchFilter } from "../api/product";
 import { useSelector, useDispatch } from "react-redux";
 import { ProductCard } from "../components";
 
@@ -7,10 +7,14 @@ const Shop = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const { search } = useSelector((state) => ({ ...state }));
+  const { text } = search;
+
   useEffect(() => {
     loadAllProducts(10);
   }, []);
 
+  // 1. Load products on page load
   const loadAllProducts = (count) => {
     setLoading(true);
     getProductsByCount(count)
@@ -22,6 +26,23 @@ const Shop = () => {
         setLoading(false);
         console.log(error);
       });
+  };
+
+  // 2. Load product from search filter
+  useEffect(() => {
+    // add slight delay, to prevent request on every key
+    const delay = setTimeout(() => {
+      fetchProductsByFilter(text);
+    }, 300);
+    return () => clearTimeout(delay);
+  }, [text]);
+
+  const fetchProductsByFilter = (text) => {
+    setLoading(true);
+    searchFilter(text).then((res) => {
+      setProducts(res.data);
+      setLoading(false);
+    });
   };
 
   return (

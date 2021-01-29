@@ -76,3 +76,10 @@ export const listRelated = async (productId) => {
     `${process.env.REACT_APP_BACKEND_API}/product/related/${productId}`
   );
 };
+
+export const searchFilter = async (query) => {
+  return await axios.post(
+    `${process.env.REACT_APP_BACKEND_API}/search/filters`,
+    { query }
+  );
+};
