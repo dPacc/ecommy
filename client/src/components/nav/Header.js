@@ -13,6 +13,8 @@ import firebase from "firebase/app";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import Search from "../forms/Search";
+
 const { SubMenu, Item } = Menu;
 
 const Header = () => {
@@ -41,6 +43,7 @@ const Header = () => {
       <Item key="home" icon={<HomeOutlined />}>
         <Link to="/">Home</Link>
       </Item>
+
       {!user && (
         <Item key="register" icon={<UserAddOutlined />} className="float-right">
           <Link to="/register">Register</Link>
@@ -73,6 +76,9 @@ const Header = () => {
           </Item>
         </SubMenu>
       )}
+      <span className="float-right p-1">
+        <Search />
+      </span>
     </Menu>
   );
 };
