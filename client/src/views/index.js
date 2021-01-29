@@ -9,6 +9,7 @@ export { default as Home } from "./Home";
 export { default as Product } from "./Product";
 export { default as CategoryHome } from "./category/CategoryHome";
 export { default as SubcategoryHome } from "./subcategory/SubcategoryHome";
+export { default as Shop } from "./Shop";
 
 // user views
 export { default as History } from "./user/History";

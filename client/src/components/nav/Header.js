@@ -6,6 +6,7 @@ import {
   UserAddOutlined,
   LogoutOutlined,
   ProfileOutlined,
+  ShoppingOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
@@ -42,6 +43,10 @@ const Header = () => {
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       <Item key="home" icon={<HomeOutlined />}>
         <Link to="/">Home</Link>
+      </Item>
+
+      <Item key="shop" icon={<ShoppingOutlined />}>
+        <Link to="/shop">Shop</Link>
       </Item>
 
       {!user && (

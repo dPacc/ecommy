@@ -23,6 +23,7 @@ import {
   ProductUpdate,
   CategoryHome,
   SubcategoryHome,
+  Shop,
 } from "./views";
 import { Header, UserRoute, AdminRoute } from "./components";
 
@@ -104,6 +105,7 @@ const App = () => {
         <Route exact path="/product/:slug" component={Product} />
         <Route exact path="/category/:slug" component={CategoryHome} />
         <Route exact path="/subcategory/:slug" component={SubcategoryHome} />
+        <Route exact path="/shop" component={Shop} />
       </Switch>
     </>
   );
