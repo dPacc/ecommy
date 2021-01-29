@@ -77,9 +77,9 @@ export const listRelated = async (productId) => {
   );
 };
 
-export const searchFilter = async (query) => {
+export const searchFilter = async (arg) => {
   return await axios.post(
     `${process.env.REACT_APP_BACKEND_API}/search/filters`,
-    { query }
+    arg
   );
 };
