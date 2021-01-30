@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import { getProductsByCount, searchFilter } from "../api/product";
 import { getCategories } from "../api/category";
 import { useSelector, useDispatch } from "react-redux";
-import { ProductCard } from "../components";
+import { ProductCard, Star } from "../components";
 import { Menu, Slider, Checkbox } from "antd";
-import { DollarOutlined, DownSquareOutlined } from "@ant-design/icons";
+import {
+  DollarOutlined,
+  DownSquareOutlined,
+  StarOutlined,
+} from "@ant-design/icons";
 
 const { SubMenu, ItemGroup } = Menu;
 
@@ -15,6 +19,8 @@ const Shop = () => {
   const [ok, setOk] = useState(false);
   const [categories, setCategories] = useState([]);
   const [checkedCategories, setCheckedCategories] = useState([]);
+
+  const [star, setStar] = useState("");
 
   const dispatch = useDispatch();
 
@@ -112,6 +118,27 @@ const Shop = () => {
     fetchProductsByFilter({ category: inTheState });
   };
 
+  // 5. Shpw products by star rating
+  const showStars = () => (
+    <div className="pr-4 pl-4 pb-2">
+      <Star starClick={handleStarClick} numberOfStars={5} />
+      <Star starClick={handleStarClick} numberOfStars={4} />
+      <Star starClick={handleStarClick} numberOfStars={3} />
+      <Star starClick={handleStarClick} numberOfStars={2} />
+      <Star starClick={handleStarClick} numberOfStars={1} />
+    </div>
+  );
+
+  const handleStarClick = (num) => {
+    // clear other filter values
+    dispatch({ type: "SEARCH_QUERY", payload: { text: "" } });
+    setPrice([0, 0]);
+    setCategories([]);
+
+    setStar(num);
+    fetchProductsByFilter({ stars: num });
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -119,7 +146,7 @@ const Shop = () => {
           <h4>Search/Filter</h4>
           <hr />
 
-          <Menu mode="inline" defaultOpenKeys={["1", "2"]}>
+          <Menu mode="inline" defaultOpenKeys={["1", "2", "3"]}>
             {/* Price */}
             <SubMenu
               key="1"
@@ -153,6 +180,19 @@ const Shop = () => {
               }
             >
               <div style={{ marginTop: "-10px" }}>{showCategories()}</div>
+            </SubMenu>
+
+            {/* Ratings */}
+            <SubMenu
+              key="3"
+              title={
+                <span className="h6">
+                  <StarOutlined />
+                  Rating
+                </span>
+              }
+            >
+              <div style={{ marginTop: "-10px" }}>{showStars()}</div>
             </SubMenu>
           </Menu>
         </div>
