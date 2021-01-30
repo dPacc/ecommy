@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publishToHeroku": "cd ../ && git subtree push --prefix server heroku-ecommy-backend master || true"
   },
   "keywords": [],
   "author": "",

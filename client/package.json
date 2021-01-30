@@ -27,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "publishToHeroku": "cd ../ && git subtree push --prefix client heroku-ecommy-frontend master || true"
   },
   "eslintConfig": {
     "extends": [
