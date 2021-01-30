@@ -9,6 +9,7 @@ import {
   DownSquareOutlined,
   StarOutlined,
 } from "@ant-design/icons";
+import { getSubcategories } from "../api/subcategory";
 
 const { SubMenu, ItemGroup } = Menu;
 
@@ -19,6 +20,8 @@ const Shop = () => {
   const [ok, setOk] = useState(false);
   const [categories, setCategories] = useState([]);
   const [checkedCategories, setCheckedCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
+  const [checkedSubCategories, setCheckedSubCategories] = useState([]);
 
   const [star, setStar] = useState("");
 
@@ -32,6 +35,10 @@ const Shop = () => {
     //fetch categories
     getCategories().then((res) => {
       setCategories(res.data);
+    });
+    // fetch subcategories
+    getSubcategories().then((res) => {
+      setSubCategories(res.data);
     });
   }, []);
 
@@ -74,6 +81,9 @@ const Shop = () => {
   const handleSlider = (val) => {
     dispatch({ type: "SEARCH_QUERY", payload: { text: "" } });
     setCheckedCategories([]);
+    setStar("");
+    setCheckedSubCategories([]);
+
     setPrice(val);
     setTimeout(() => {
       setOk(!ok);
@@ -103,6 +113,8 @@ const Shop = () => {
     // clear other filter values
     dispatch({ type: "SEARCH_QUERY", payload: { text: "" } });
     setPrice([0, 0]);
+    setStar("");
+    setCheckedSubCategories([]);
 
     let inTheState = [...checkedCategories];
     let justChecked = e.target.value;
@@ -133,10 +145,35 @@ const Shop = () => {
     // clear other filter values
     dispatch({ type: "SEARCH_QUERY", payload: { text: "" } });
     setPrice([0, 0]);
-    setCategories([]);
+    setCheckedCategories([]);
+    setCheckedSubCategories([]);
 
     setStar(num);
     fetchProductsByFilter({ stars: num });
+  };
+
+  // 6. Show products by sub category
+  const showSubCategories = () =>
+    subCategories.map((s) => (
+      <div
+        key={s._id}
+        className="p-1 m-1 badge badge-secondary"
+        onClick={() => handleSubCatSubmit(s)}
+        style={{ cursor: "pointer" }}
+      >
+        {s.name}
+      </div>
+    ));
+
+  const handleSubCatSubmit = (s) => {
+    // clear other filter values
+    dispatch({ type: "SEARCH_QUERY", payload: { text: "" } });
+    setPrice([0, 0]);
+    setCheckedCategories([]);
+    setStar("");
+
+    setCheckedSubCategories(s);
+    fetchProductsByFilter({ subcategory: s });
   };
 
   return (
@@ -146,7 +183,7 @@ const Shop = () => {
           <h4>Search/Filter</h4>
           <hr />
 
-          <Menu mode="inline" defaultOpenKeys={["1", "2", "3"]}>
+          <Menu mode="inline" defaultOpenKeys={["1", "2", "3", "4"]}>
             {/* Price */}
             <SubMenu
               key="1"
@@ -193,6 +230,21 @@ const Shop = () => {
               }
             >
               <div style={{ marginTop: "-10px" }}>{showStars()}</div>
+            </SubMenu>
+
+            {/* Subcategories */}
+            <SubMenu
+              key="4"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined />
+                  Sub-Categories
+                </span>
+              }
+            >
+              <div className="pl-4 pr-4" style={{ marginTop: "-10px" }}>
+                {showSubCategories()}
+              </div>
             </SubMenu>
           </Menu>
         </div>
