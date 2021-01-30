@@ -20,3 +20,5 @@ export { default as SingleProduct } from "./cards/SingleProduct";
 
 export { default as CategoryList } from "./category/CategoryList";
 export { default as SubcategoryList } from "./subcategory/SubcategoryList";
+
+export { default as Star } from "./forms/Star";
