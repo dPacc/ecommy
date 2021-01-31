@@ -250,7 +250,37 @@ const handleStars = (req, res, stars) => {
 };
 
 const handleSubcategories = async (req, res, subcategory) => {
-  const products = await await Product.find({ subcategories: subcategory })
+  const products = await Product.find({ subcategories: subcategory })
+    .populate("category", "_id name")
+    .populate("subcategories", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
+const handleBrand = async (req, res, brand) => {
+  const products = await Product.find({ brand })
+    .populate("category", "_id name")
+    .populate("subcategories", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
+const handleColor = async (req, res, color) => {
+  const products = await Product.find({ color })
+    .populate("category", "_id name")
+    .populate("subcategories", "_id name")
+    .populate("postedBy", "_id name")
+    .exec();
+
+  res.json(products);
+};
+
+const handleShipping = async (req, res, shipping) => {
+  const products = await Product.find({ shipping })
     .populate("category", "_id name")
     .populate("subcategories", "_id name")
     .populate("postedBy", "_id name")
@@ -260,7 +290,16 @@ const handleSubcategories = async (req, res, subcategory) => {
 };
 
 exports.searchFilters = async (req, res) => {
-  const { query, price, category, stars, subcategory } = req.body;
+  const {
+    query,
+    price,
+    category,
+    stars,
+    subcategory,
+    brand,
+    color,
+    shipping,
+  } = req.body;
 
   if (query) {
     console.log("QUERY ---->", query);
@@ -286,5 +325,20 @@ exports.searchFilters = async (req, res) => {
   if (subcategory) {
     console.log("SUBCATEGORY ----->", stars);
     await handleSubcategories(req, res, subcategory);
+  }
+
+  if (brand) {
+    console.log("BRAND ----->", brand);
+    await handleBrand(req, res, brand);
+  }
+
+  if (color) {
+    console.log("COLOR ----->", color);
+    await handleColor(req, res, color);
+  }
+
+  if (shipping) {
+    console.log("SHIPPING ----->", shipping);
+    await handleShipping(req, res, shipping);
   }
 };
