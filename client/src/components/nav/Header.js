@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu } from "antd";
+import { Menu, Badge } from "antd";
 import {
   HomeOutlined,
   LoginOutlined,
@@ -7,6 +7,7 @@ import {
   LogoutOutlined,
   ProfileOutlined,
   ShoppingOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
@@ -23,7 +24,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const [current, setCurrent] = useState("");
 
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, cart } = useSelector((state) => ({ ...state }));
 
   const handleClick = (e) => {
     setCurrent(e.key);
@@ -47,6 +48,14 @@ const Header = () => {
 
       <Item key="shop" icon={<ShoppingOutlined />}>
         <Link to="/shop">Shop</Link>
+      </Item>
+
+      <Item key="cart" icon={<ShoppingCartOutlined />}>
+        <Link to="/cart">
+          <Badge count={cart.length} offset={[9, 0]}>
+            Cart
+          </Badge>
+        </Link>
       </Item>
 
       {!user && (
