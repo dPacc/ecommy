@@ -42,6 +42,8 @@ const Shop = () => {
     "White",
   ]);
   const [checkedColor, setCheckedColor] = useState("");
+  const [shipping, setShipping] = useState(["Yes", "No"]);
+  const [checkedShipping, setCheckedShipping] = useState("");
 
   const dispatch = useDispatch();
 
@@ -104,6 +106,7 @@ const Shop = () => {
     setCheckedSubCategories([]);
     setClickedBrand("");
     setCheckedColor("");
+    setCheckedShipping("");
 
     setPrice(val);
     setTimeout(() => {
@@ -138,6 +141,7 @@ const Shop = () => {
     setCheckedSubCategories([]);
     setClickedBrand("");
     setCheckedColor("");
+    setCheckedShipping("");
 
     let inTheState = [...checkedCategories];
     let justChecked = e.target.value;
@@ -172,6 +176,7 @@ const Shop = () => {
     setCheckedSubCategories([]);
     setClickedBrand("");
     setCheckedColor("");
+    setCheckedShipping("");
 
     setStar(num);
     fetchProductsByFilter({ stars: num });
@@ -198,6 +203,7 @@ const Shop = () => {
     setStar("");
     setClickedBrand("");
     setCheckedColor("");
+    setCheckedShipping("");
 
     setCheckedSubCategories(s);
     fetchProductsByFilter({ subcategory: s });
@@ -225,12 +231,13 @@ const Shop = () => {
     setCheckedSubCategories([]);
     setStar("");
     setCheckedColor("");
+    setCheckedShipping("");
 
     setClickedBrand(e.target.value);
     fetchProductsByFilter({ brand: e.target.value });
   };
 
-  // Filter products by color
+  // 8. Filter products by color
   const showColors = () =>
     colors.map((c) => (
       <Radio
@@ -238,7 +245,7 @@ const Shop = () => {
         name={c}
         checked={c === checkedColor}
         onChange={handleColorSubmit}
-        className="pb-2 pl-4 pr-4"
+        className="pb-1 pl-4 pr-4"
       >
         {c}
       </Radio>
@@ -251,9 +258,37 @@ const Shop = () => {
     setCheckedCategories([]);
     setCheckedSubCategories([]);
     setStar("");
+    setCheckedShipping("");
 
     setCheckedColor(e.target.value);
     fetchProductsByFilter({ color: e.target.value });
+  };
+
+  // 9. Filter products by shipping
+  const showShipping = () =>
+    shipping.map((s) => (
+      <Radio
+        value={s}
+        name={s}
+        checked={s === checkedShipping}
+        onChange={handleShippingSubmit}
+        className="pb-1 pl-4 pr-4"
+      >
+        {s}
+      </Radio>
+    ));
+
+  const handleShippingSubmit = (e) => {
+    // clear other filter values
+    dispatch({ type: "SEARCH_QUERY", payload: { text: "" } });
+    setPrice([0, 0]);
+    setCheckedCategories([]);
+    setCheckedSubCategories([]);
+    setStar("");
+    setCheckedColor("");
+
+    setCheckedShipping(e.target.value);
+    fetchProductsByFilter({ shipping: e.target.value });
   };
 
   return (
@@ -351,12 +386,27 @@ const Shop = () => {
               title={
                 <span className="h6">
                   <DownSquareOutlined />
-                  Colors
+                  Color
                 </span>
               }
             >
               <div className="h6" style={{ marginTop: "-10px" }}>
                 {showColors()}
+              </div>
+            </SubMenu>
+
+            {/* Colors */}
+            <SubMenu
+              key="7"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined />
+                  Shipping
+                </span>
+              }
+            >
+              <div className="h6" style={{ marginTop: "-10px" }}>
+                {showShipping()}
               </div>
             </SubMenu>
           </Menu>
