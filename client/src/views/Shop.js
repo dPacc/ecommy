@@ -23,7 +23,6 @@ const Shop = () => {
   const [subCategories, setSubCategories] = useState([]);
   const [checkedSubCategories, setCheckedSubCategories] = useState([]);
   const [star, setStar] = useState("");
-  const [clickedBrand, setClickedBrand] = useState("");
   const [brands, setBrands] = useState([
     "Apple",
     "Lenovo",
@@ -34,6 +33,15 @@ const Shop = () => {
     "HP",
     "Acer",
   ]);
+  const [clickedBrand, setClickedBrand] = useState("");
+  const [colors, setColors] = useState([
+    "Black",
+    "Brown",
+    "Silver",
+    "Blue",
+    "White",
+  ]);
+  const [checkedColor, setCheckedColor] = useState("");
 
   const dispatch = useDispatch();
 
@@ -95,6 +103,7 @@ const Shop = () => {
     setStar("");
     setCheckedSubCategories([]);
     setClickedBrand("");
+    setCheckedColor("");
 
     setPrice(val);
     setTimeout(() => {
@@ -128,6 +137,7 @@ const Shop = () => {
     setStar("");
     setCheckedSubCategories([]);
     setClickedBrand("");
+    setCheckedColor("");
 
     let inTheState = [...checkedCategories];
     let justChecked = e.target.value;
@@ -143,7 +153,7 @@ const Shop = () => {
     fetchProductsByFilter({ category: inTheState });
   };
 
-  // 5. Shpw products by star rating
+  // 5. Show products by star rating
   const showStars = () => (
     <div className="pr-4 pl-4 pb-2">
       <Star starClick={handleStarClick} numberOfStars={5} />
@@ -161,6 +171,7 @@ const Shop = () => {
     setCheckedCategories([]);
     setCheckedSubCategories([]);
     setClickedBrand("");
+    setCheckedColor("");
 
     setStar(num);
     fetchProductsByFilter({ stars: num });
@@ -186,6 +197,7 @@ const Shop = () => {
     setCheckedCategories([]);
     setStar("");
     setClickedBrand("");
+    setCheckedColor("");
 
     setCheckedSubCategories(s);
     fetchProductsByFilter({ subcategory: s });
@@ -199,7 +211,7 @@ const Shop = () => {
         name={br}
         checked={br === clickedBrand}
         onChange={handleBrandSubmit}
-        className="pb-1 pl-1 pr-4"
+        className="pb-2 pl-4 pr-4"
       >
         {br}
       </Radio>
@@ -212,9 +224,36 @@ const Shop = () => {
     setCheckedCategories([]);
     setCheckedSubCategories([]);
     setStar("");
+    setCheckedColor("");
 
     setClickedBrand(e.target.value);
     fetchProductsByFilter({ brand: e.target.value });
+  };
+
+  // Filter products by color
+  const showColors = () =>
+    colors.map((c) => (
+      <Radio
+        value={c}
+        name={c}
+        checked={c === checkedColor}
+        onChange={handleColorSubmit}
+        className="pb-2 pl-4 pr-4"
+      >
+        {c}
+      </Radio>
+    ));
+
+  const handleColorSubmit = (e) => {
+    // clear other filter values
+    dispatch({ type: "SEARCH_QUERY", payload: { text: "" } });
+    setPrice([0, 0]);
+    setCheckedCategories([]);
+    setCheckedSubCategories([]);
+    setStar("");
+
+    setCheckedColor(e.target.value);
+    fetchProductsByFilter({ color: e.target.value });
   };
 
   return (
@@ -224,7 +263,10 @@ const Shop = () => {
           <h4>Search/Filter</h4>
           <hr />
 
-          <Menu mode="inline" defaultOpenKeys={["1", "2", "3", "4", "5"]}>
+          <Menu
+            mode="inline"
+            defaultOpenKeys={["1", "2", "3", "4", "5", "6", "7"]}
+          >
             {/* Price */}
             <SubMenu
               key="1"
@@ -298,8 +340,23 @@ const Shop = () => {
                 </span>
               }
             >
-              <div className="pl-4 pr-4" style={{ marginTop: "-10px" }}>
+              <div className="h6" style={{ marginTop: "-10px" }}>
                 {showBrands()}
+              </div>
+            </SubMenu>
+
+            {/* Colors */}
+            <SubMenu
+              key="6"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined />
+                  Colors
+                </span>
+              }
+            >
+              <div className="h6" style={{ marginTop: "-10px" }}>
+                {showColors()}
               </div>
             </SubMenu>
           </Menu>
