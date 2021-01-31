@@ -3,7 +3,7 @@ import { getProductsByCount, searchFilter } from "../api/product";
 import { getCategories } from "../api/category";
 import { useSelector, useDispatch } from "react-redux";
 import { ProductCard, Star } from "../components";
-import { Menu, Slider, Checkbox } from "antd";
+import { Menu, Slider, Checkbox, Radio } from "antd";
 import {
   DollarOutlined,
   DownSquareOutlined,
@@ -22,8 +22,18 @@ const Shop = () => {
   const [checkedCategories, setCheckedCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [checkedSubCategories, setCheckedSubCategories] = useState([]);
-
   const [star, setStar] = useState("");
+  const [clickedBrand, setClickedBrand] = useState("");
+  const [brands, setBrands] = useState([
+    "Apple",
+    "Lenovo",
+    "Samsung",
+    "Microsoft",
+    "ASUS",
+    "MSI",
+    "HP",
+    "Acer",
+  ]);
 
   const dispatch = useDispatch();
 
@@ -79,10 +89,12 @@ const Shop = () => {
   }, [ok]);
 
   const handleSlider = (val) => {
+    // Clear other filters
     dispatch({ type: "SEARCH_QUERY", payload: { text: "" } });
     setCheckedCategories([]);
     setStar("");
     setCheckedSubCategories([]);
+    setClickedBrand("");
 
     setPrice(val);
     setTimeout(() => {
@@ -115,6 +127,7 @@ const Shop = () => {
     setPrice([0, 0]);
     setStar("");
     setCheckedSubCategories([]);
+    setClickedBrand("");
 
     let inTheState = [...checkedCategories];
     let justChecked = e.target.value;
@@ -147,6 +160,7 @@ const Shop = () => {
     setPrice([0, 0]);
     setCheckedCategories([]);
     setCheckedSubCategories([]);
+    setClickedBrand("");
 
     setStar(num);
     fetchProductsByFilter({ stars: num });
@@ -171,9 +185,36 @@ const Shop = () => {
     setPrice([0, 0]);
     setCheckedCategories([]);
     setStar("");
+    setClickedBrand("");
 
     setCheckedSubCategories(s);
     fetchProductsByFilter({ subcategory: s });
+  };
+
+  // 7. Show products by brands
+  const showBrands = () =>
+    brands.map((br) => (
+      <Radio
+        value={br}
+        name={br}
+        checked={br === clickedBrand}
+        onChange={handleBrandSubmit}
+        className="pb-1 pl-1 pr-4"
+      >
+        {br}
+      </Radio>
+    ));
+
+  const handleBrandSubmit = (e) => {
+    // clear other filter values
+    dispatch({ type: "SEARCH_QUERY", payload: { text: "" } });
+    setPrice([0, 0]);
+    setCheckedCategories([]);
+    setCheckedSubCategories([]);
+    setStar("");
+
+    setClickedBrand(e.target.value);
+    fetchProductsByFilter({ brand: e.target.value });
   };
 
   return (
@@ -183,7 +224,7 @@ const Shop = () => {
           <h4>Search/Filter</h4>
           <hr />
 
-          <Menu mode="inline" defaultOpenKeys={["1", "2", "3", "4"]}>
+          <Menu mode="inline" defaultOpenKeys={["1", "2", "3", "4", "5"]}>
             {/* Price */}
             <SubMenu
               key="1"
@@ -244,6 +285,21 @@ const Shop = () => {
             >
               <div className="pl-4 pr-4" style={{ marginTop: "-10px" }}>
                 {showSubCategories()}
+              </div>
+            </SubMenu>
+
+            {/* Brands */}
+            <SubMenu
+              key="5"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined />
+                  Brands
+                </span>
+              }
+            >
+              <div className="pl-4 pr-4" style={{ marginTop: "-10px" }}>
+                {showBrands()}
               </div>
             </SubMenu>
           </Menu>
