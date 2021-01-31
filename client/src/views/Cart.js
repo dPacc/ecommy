@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { ProductCardInCheckout } from "../components";
 
 const Cart = () => {
   const { cart, user } = useSelector((state) => ({ ...state }));
@@ -11,6 +12,27 @@ const Cart = () => {
       return currVal + nextVal.count * nextVal.price;
     }, 0);
   };
+
+  const showCartItems = () => (
+    <table className="table table-bordered">
+      <thead className="thead-light">
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col">Title</th>
+          <th scope="col">Price</th>
+          <th scope="col">Brand</th>
+          <th scope="col">Color</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Shipping</th>
+          <th scope="col">Remove</th>
+        </tr>
+      </thead>
+
+      {cart.map((p) => (
+        <ProductCardInCheckout key={p._id} product={p} />
+      ))}
+    </table>
+  );
 
   const saveOrderToDb = () => {
     //
@@ -27,7 +49,7 @@ const Cart = () => {
               No products in cart. <Link to="/shop">Continue Shopping!</Link>
             </p>
           ) : (
-            "Show Cart Items"
+            showCartItems()
           )}
         </div>
 

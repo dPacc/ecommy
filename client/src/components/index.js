@@ -22,3 +22,5 @@ export { default as CategoryList } from "./category/CategoryList";
 export { default as SubcategoryList } from "./subcategory/SubcategoryList";
 
 export { default as Star } from "./forms/Star";
+
+export { default as ProductCardInCheckout } from "./cards/ProductCardInCheckout";
