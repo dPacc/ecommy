@@ -9,7 +9,7 @@ exports.userCart = async (req, res) => {
 
   const user = await User.findOne({ email: req.user.email }).exec();
 
-  // Check if cart with looged in user ID already exists
+  // Check if cart with logged in user ID already exists
   let cartExistByThisUser = await Cart.findOne({ orderedBy: user._id }).exec();
 
   if (cartExistByThisUser) {
@@ -47,4 +47,16 @@ exports.userCart = async (req, res) => {
   console.log("NEW CART", newCart);
 
   res.json({ ok: true });
+};
+
+exports.getUserCart = async (req, res) => {
+  const user = await User.findOne({ email: req.user.email }).exec();
+
+  let cart = await Cart.findOne({ orderedBy: user._id })
+    .populate("products.product", "_id title price totalAfterDiscount")
+    .exec();
+
+  const { products, cartTotal, totalAfterDiscount } = cart;
+
+  res.json({ products, cartTotal, totalAfterDiscount });
 };
