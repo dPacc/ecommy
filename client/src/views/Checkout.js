@@ -47,6 +47,10 @@ const Checkout = () => {
       setTotal(0);
       toast.success("Cart is empty. Continue Shopping!");
     });
+
+    // clear discounts
+    setDiscountTotal(0);
+    setCoupon("");
   };
 
   const saveAddressToDb = () => {
@@ -97,7 +101,10 @@ const Checkout = () => {
   const showApplyCoupon = () => (
     <>
       <input
-        onChange={(e) => setCoupon(e.target.value)}
+        onChange={(e) => {
+          setDiscountError("");
+          setCoupon(e.target.value);
+        }}
         type="text"
         className="form-control"
         value={coupon}
@@ -119,6 +126,8 @@ const Checkout = () => {
         <h4>Got Coupon?</h4>
         <br />
         {showApplyCoupon()}
+        <br />
+        {discountError && <p className="bg-danger p-2">{discountError}</p>}
       </div>
 
       <div className="col-md-6">
@@ -129,6 +138,10 @@ const Checkout = () => {
         {showProductSummary()}
         <hr />
         <p>Cart Total: ${total}</p>
+
+        {discountTotal > 0 && (
+          <p className="bg-success p-2">Discount Applied: ${discountTotal}</p>
+        )}
 
         <div className="row">
           <div className="col-md-6">
