@@ -213,6 +213,7 @@ const Shop = () => {
   const showBrands = () =>
     brands.map((br) => (
       <Radio
+        key={br}
         value={br}
         name={br}
         checked={br === clickedBrand}
@@ -243,6 +244,7 @@ const Shop = () => {
       <Radio
         value={c}
         name={c}
+        key={c}
         checked={c === checkedColor}
         onChange={handleColorSubmit}
         className="pb-1 pl-4 pr-4"
@@ -270,6 +272,7 @@ const Shop = () => {
       <Radio
         value={s}
         name={s}
+        key={s}
         checked={s === checkedShipping}
         onChange={handleShippingSubmit}
         className="pb-1 pl-4 pr-4"
