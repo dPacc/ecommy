@@ -89,6 +89,9 @@ const Shop = () => {
     // add slight delay, to prevent request on every key
     const delay = setTimeout(() => {
       fetchProductsByFilter({ query: text });
+      if (!text) {
+        loadAllProducts();
+      }
     }, 300);
     return () => clearTimeout(delay);
   }, [text]);
