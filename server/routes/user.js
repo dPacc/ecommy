@@ -1,8 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/user", (req, res) => {
-  res.send("You hit the user API");
-});
+// route middlewares
+const { authCheck } = require("../middlewares/auth");
+
+//controllers
+const { userCart } = require("../controllers/user");
+
+router.post("/user/cart", authCheck, userCart);
 
 module.exports = router;
