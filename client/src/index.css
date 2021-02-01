@@ -3,3 +3,7 @@ card-image {
   height: 750px;
   object-fit: cover;
 }
+
+.pointer {
+  cursor: pointer;
+}
