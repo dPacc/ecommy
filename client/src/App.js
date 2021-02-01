@@ -26,7 +26,7 @@ import {
   Shop,
   Cart,
 } from "./views";
-import { Header, UserRoute, AdminRoute } from "./components";
+import { Header, UserRoute, AdminRoute, SideDrawer } from "./components";
 
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
@@ -66,6 +66,7 @@ const App = () => {
     <>
       <Header />
       <ToastContainer />
+      <SideDrawer />
       <Switch>
         {/* auth routes */}
         <Route exact path="/" component={Home} />
