@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { getUserCart } from "../api/user";
+import { getUserCart, emptyCart } from "../api/user";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const { cart, user } = useSelector((state) => ({ ...state }));
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
-
-  const saveAddressToDb = () => {
-    //
-  };
 
   useEffect(() => {
     getUserCart(user.token).then((res) => {
@@ -20,6 +17,26 @@ const Checkout = () => {
     });
   }, []);
 
+  const handleEmptyCart = () => {
+    // remove from local storage
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("cart");
+    }
+
+    // remove from redux
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: [],
+    });
+
+    // remove from backend
+    emptyCart(user.token).then((res) => {
+      setProducts([]);
+      setTotal(0);
+      toast.success("Cart is empty. Continue Shopping!");
+    });
+  };
+
   return (
     <div className="row">
       <div className="col-md-6">
@@ -27,9 +44,7 @@ const Checkout = () => {
         <br />
         <br />
         Text Area
-        <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
-          Save
-        </button>
+        <button className="btn btn-primary mt-2">Save</button>
         <hr />
         <h4>Got Coupon?</h4>
         <br />
@@ -57,7 +72,13 @@ const Checkout = () => {
           </div>
 
           <div className="col-md-6">
-            <button className="btn btn-primary">Empty Cart</button>
+            <button
+              disabled={!products.length}
+              onClick={handleEmptyCart}
+              className="btn btn-primary"
+            >
+              Empty Cart
+            </button>
           </div>
         </div>
       </div>
