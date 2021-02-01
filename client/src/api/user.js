@@ -39,3 +39,16 @@ export const saveUserAddress = async (address, authtoken) => {
     }
   );
 };
+
+// apply discount
+export const applyCoupon = async (coupon, authtoken) => {
+  return await axios.post(
+    `${process.env.REACT_APP_BACKEND_API}/user/cart/coupon`,
+    { coupon },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};
