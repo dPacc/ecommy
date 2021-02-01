@@ -26,6 +26,7 @@ import {
   Shop,
   Cart,
   Checkout,
+  CreateCoupon,
 } from "./views";
 import { Header, UserRoute, AdminRoute, SideDrawer } from "./components";
 
@@ -104,6 +105,7 @@ const App = () => {
           path="/admin/product/:slug"
           component={ProductUpdate}
         />
+        <AdminRoute exact path="/admin/coupon" component={CreateCoupon} />
         {/* Common Routes */}
         <Route exact path="/product/:slug" component={Product} />
         <Route exact path="/category/:slug" component={CategoryHome} />

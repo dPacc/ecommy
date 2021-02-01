@@ -27,3 +27,4 @@ export { default as SubcategoryUpdate } from "./admin/subcategory/SubcategoryUpd
 export { default as ProductCreate } from "./admin/product/ProductCreate";
 export { default as AllProducts } from "./admin/product/AllProducts";
 export { default as ProductUpdate } from "./admin/product/ProductUpdate";
+export { default as CreateCoupon } from "./admin/coupons/CreateCoupon";
