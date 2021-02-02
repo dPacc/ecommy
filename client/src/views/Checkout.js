@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const Checkout = () => {
+const Checkout = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
   const [products, setProducts] = useState([]);
@@ -158,6 +158,7 @@ const Checkout = () => {
             <button
               disabled={!addressSaved || !products.length}
               className="btn btn-primary"
+              onClick={() => history.push("/payment")}
             >
               Place Order
             </button>

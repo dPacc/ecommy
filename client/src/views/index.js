@@ -17,6 +17,7 @@ export { default as History } from "./user/History";
 export { default as Password } from "./user/Password";
 export { default as Wishlist } from "./user/Wishlist";
 export { default as Checkout } from "./Checkout";
+export { default as Payment } from "./Payment";
 
 // admin views
 export { default as AdminDashboard } from "./admin/AdminDashboard";
