@@ -9,7 +9,7 @@ exports.createPaymentIntent = async (req, res) => {
   // later apply coupon
   // later calculate price
 
-  const paymentIntent = await stripe.paymentIntent.createPaymentIntent({
+  const paymentIntent = await stripe.paymentIntents.create({
     amount: 100,
     currency: "usd",
   });
