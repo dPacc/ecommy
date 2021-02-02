@@ -12,7 +12,7 @@ import "react-quill/dist/quill.snow.css";
 
 const Checkout = () => {
   const dispatch = useDispatch();
-  const { cart, user } = useSelector((state) => ({ ...state }));
+  const { user } = useSelector((state) => ({ ...state }));
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [discountTotal, setDiscountTotal] = useState(0);
@@ -90,10 +90,20 @@ const Checkout = () => {
       console.log("RES ON COUPON APPLIED", res.data);
       if (res.data) {
         setDiscountTotal(res.data);
+        // update redux coupon applied to true/false
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: true,
+        });
       }
 
       if (res.data.err) {
         setDiscountError(res.data.err);
+        // update redux coupon applied to true/false
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: false,
+        });
       }
     });
   };
