@@ -17,7 +17,7 @@ import RatingModal from "../modal/RatingModal";
 const { TabPane } = Tabs;
 
 const SingleProduct = ({ product, star, handleChangeRating }) => {
-  const { title, images, description, _id } = product;
+  const { title, images, description, _id, quantity } = product;
   const [tooltip, setTooltip] = useState("Click to add");
 
   // redux
@@ -95,9 +95,9 @@ const SingleProduct = ({ product, star, handleChangeRating }) => {
         <Card
           actions={[
             <Tooltip title={tooltip}>
-              <a onClick={handleAddToCart}>
+              <a onClick={handleAddToCart} disabled={quantity < 1}>
                 <ShoppingCartOutlined className="text-danger" />
-                <br /> Add to cart
+                <br /> {quantity < 1 ? "Out of stock" : "Add to cart"}
               </a>
             </Tooltip>,
             <Link to={`/product/wishlist`}>
