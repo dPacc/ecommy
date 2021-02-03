@@ -15,12 +15,12 @@ const StripeCheckout = () => {
   const elements = useElements();
 
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, coupon } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
-    createPaymentIntent(user.token)
+    createPaymentIntent(coupon, user.token)
       .then((res) => {
-        // console.log("CREATE PAYMENT INTENT", res.data);
+        console.log("CREATE PAYMENT INTENT", res.data);
         setClientSecret(res.data.clientSecret);
       })
       .catch((err) => {
