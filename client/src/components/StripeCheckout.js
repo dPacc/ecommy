@@ -8,6 +8,8 @@ import { Card } from "antd";
 import { DollarOutlined, CheckOutlined } from "@ant-design/icons";
 import laptop from "../images/laptop.png";
 
+import { createOrder, emptyCart } from "../api/user";
+
 const StripeCheckout = () => {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
@@ -58,7 +60,27 @@ const StripeCheckout = () => {
     } else {
       // Here you get result after successful payment
       // Create order and save to db for admin to process
-      // empty user cart from redux store and local storage
+      createOrder(user.token, { stripeResponse: payload }).then((res) => {
+        // console.log(res.data);
+        if (res.data.ok) {
+          // empty user cart from local storage
+          if (typeof window !== "undefined") {
+            window.localStorage.removeItem("cart");
+          }
+          // empty user cart from redux store
+          dispatch({
+            type: "ADD_TO_CART",
+            payload: [],
+          });
+          // reset coupon to false
+          dispatch({
+            type: "COUPON_APPLIED",
+            payload: false,
+          });
+          // empty cart from database
+          emptyCart(user.token);
+        }
+      });
       // console.log(JSON.stringify(payload, null, 4));
       setError(null);
       setProcessing(false);
@@ -105,6 +127,7 @@ const StripeCheckout = () => {
       <div className="text-center pb-5">
         <Card
           cover={
+            // eslint-disable-next-line jsx-a11y/alt-text
             <img
               src={laptop}
               style={{

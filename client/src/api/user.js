@@ -52,3 +52,16 @@ export const applyCoupon = async (coupon, authtoken) => {
     }
   );
 };
+
+// create order
+export const createOrder = async (authtoken, paymentIntent) => {
+  return await axios.post(
+    `${process.env.REACT_APP_BACKEND_API}/user/order`,
+    paymentIntent,
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};
