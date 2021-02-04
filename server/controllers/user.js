@@ -111,6 +111,7 @@ exports.applyCouponToUserCart = async (req, res) => {
   res.json(totalAfterDiscount);
 };
 
+// save order to database
 exports.createOrder = async (req, res) => {
   const { paymentIntent } = req.body.stripeResponse;
   const user = await User.findOne({ email: req.user.email }).exec();
@@ -140,4 +141,15 @@ exports.createOrder = async (req, res) => {
   // console.log("NEW ORDER SAVED", newOrder);
 
   res.json({ ok: true });
+};
+
+// get user orders
+exports.getUserOrders = async (req, res) => {
+  const user = await User.findOne({ email: req.user.email }).exec();
+
+  const orders = await Order.find({ orderedBy: user._id })
+    .populate("products.product")
+    .exec();
+
+  res.json(orders);
 };
