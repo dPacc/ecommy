@@ -20,13 +20,71 @@ const History = () => {
     });
   };
 
+  const showEachOrders = () =>
+    orders.map((o, i) => (
+      <div key={i} className="m-5 p-3 card">
+        <p>Show payment Info</p>
+        {showOrderInTable(o)}
+        <div className="row">
+          <div className="col">
+            <p>PDF Download</p>
+          </div>
+        </div>
+      </div>
+    ));
+
+  const showOrderInTable = (order) => (
+    <table className="table table-bordered">
+      <thead className="thead-light">
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Price</th>
+          <th scope="col">Brand</th>
+          <th scope="col">Color</th>
+          <th scope="col">Count</th>
+          <th scope="col">Shipping</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {order.products.map((p, i) => (
+          <tr key={i}>
+            <td>
+              <b>{p.product.title}</b>
+            </td>
+            <td> {p.product.price}</td>
+            <td> {p.product.brand}</td>
+            <td> {p.color}</td>
+            <td> {p.count}</td>
+            <td>
+              {" "}
+              {p.product.shipping === "Yes" ? (
+                <CheckCircleOutlined style={{ color: "green" }} />
+              ) : (
+                <CloseCircleOutlined style={{ color: "red" }} />
+              )}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="colmd-2">
           <UserNav />
         </div>
-        <div className="col">User History Page</div>
+        <div className="col text-center">
+          {orders.length > 0 ? (
+            <h4>Previous orders</h4>
+          ) : (
+            <h4>No orders yet</h4>
+          )}
+
+          {showEachOrders()}
+        </div>
       </div>
     </div>
   );
