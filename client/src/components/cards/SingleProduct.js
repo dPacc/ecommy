@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Tabs, Tooltip } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -10,13 +10,16 @@ import StarRatings from "react-star-ratings";
 import { showAverage } from "../../api/rating";
 import _ from "lodash";
 import { useDispatch, useSelector } from "react-redux";
+import { addWishlist, removeWishlist } from "../../api/user";
 
 // modal component
 import RatingModal from "../modal/RatingModal";
+import { toast } from "react-toastify";
 
 const { TabPane } = Tabs;
 
 const SingleProduct = ({ product, star, handleChangeRating }) => {
+  const history = useHistory();
   const { title, images, description, _id, quantity } = product;
   const [tooltip, setTooltip] = useState("Click to add");
 
@@ -57,6 +60,15 @@ const SingleProduct = ({ product, star, handleChangeRating }) => {
         payload: true,
       });
     }
+  };
+
+  const handleAddToWishlist = (e) => {
+    e.preventDefault();
+
+    addWishlist(_id, user.token).then((res) => {
+      toast.success(`${title} added to wishlist`);
+      history.push("/user/wishlist");
+    });
   };
 
   return (
@@ -100,9 +112,9 @@ const SingleProduct = ({ product, star, handleChangeRating }) => {
                 <br /> {quantity < 1 ? "Out of stock" : "Add to cart"}
               </a>
             </Tooltip>,
-            <Link to={`/product/wishlist`}>
+            <a onClick={handleAddToWishlist}>
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
-            </Link>,
+            </a>,
             <RatingModal>
               <StarRatings
                 starRatedColor="gold"
