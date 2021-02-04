@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { UserNav, ShowPaymentInfo } from "../../components";
+import { UserNav, ShowPaymentInfo, Invoice } from "../../components";
 import { getUserOrders } from "../../api/user";
 import { useSelector, useDispatch } from "react-redux";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const History = () => {
   const { user } = useSelector((state) => ({ ...state }));
@@ -26,12 +27,20 @@ const History = () => {
         <ShowPaymentInfo order={o} />
         {showOrderInTable(o)}
         <div className="row">
-          <div className="col">
-            <p>PDF Download</p>
-          </div>
+          <div className="col">{showDownloadLink(o)}</div>
         </div>
       </div>
     ));
+
+  const showDownloadLink = (order) => (
+    <PDFDownloadLink
+      document={<Invoice order={order} />}
+      fileName="invoice.pdf"
+      className="btn btn-sm btn-block btn-outline-primary"
+    >
+      Download PDF
+    </PDFDownloadLink>
+  );
 
   const showOrderInTable = (order) => (
     <table className="table table-bordered">

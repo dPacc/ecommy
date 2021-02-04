@@ -34,7 +34,7 @@ const ShowPaymentInfo = ({ order }) => {
         </span>{" "}
         <br />
         <span className="badge bg-primary test-white">
-          <b>xSTATUS:</b> {order.orderStatus}
+          <b>STATUS:</b> {order.orderStatus}
         </span>{" "}
       </p>
     </div>
