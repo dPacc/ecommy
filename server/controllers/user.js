@@ -153,3 +153,37 @@ exports.getUserOrders = async (req, res) => {
 
   res.json(orders);
 };
+
+// wishlist
+exports.addToWishlist = async (req, res) => {
+  const { productId } = req.body;
+
+  const user = await User.findOneAndUpdate(
+    { email: req.user.email },
+    { $addToSet: { wishlist: productId } },
+    { new: true }
+  ).exec();
+
+  res.json({ added: true });
+};
+
+exports.wishlist = async (req, res) => {
+  const allWishlist = await User.find({ email: req.user.email })
+    .select("wishlist")
+    .populate("wishlist")
+    .exec();
+
+  res.json(allWishlist);
+};
+
+exports.removeFromWishlist = async (req, res) => {
+  const { productId } = req.params;
+
+  const user = await User.findOneAndUpdate(
+    { email: req.user.email },
+    { $pull: { wishlist: productId } },
+    { new: true }
+  ).exec();
+
+  res.json({ ok: true });
+};
