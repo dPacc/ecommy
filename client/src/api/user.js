@@ -74,3 +74,36 @@ export const getUserOrders = async (authtoken) => {
     },
   });
 };
+
+// Wishlist
+export const getWishlist = async (authtoken) => {
+  return await axios.get(`${process.env.REACT_APP_BACKEND_API}/user/wishlist`, {
+    headers: {
+      authtoken,
+    },
+  });
+};
+
+export const removeWishlist = async (productId, authtoken) => {
+  return await axios.put(
+    `${process.env.REACT_APP_BACKEND_API}/user/wishlist/${productId}`,
+    {},
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};
+
+export const addWishlist = async (productId, authtoken) => {
+  return await axios.post(
+    `${process.env.REACT_APP_BACKEND_API}/user/wishlist`,
+    { productId },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};
