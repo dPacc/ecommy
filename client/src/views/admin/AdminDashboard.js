@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AdminNav } from "../../components";
+import { AdminNav, Orders } from "../../components";
 import { getAllOrders, updateOrderStatus } from "../../api/admin";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -22,7 +22,7 @@ const AdminDashboard = () => {
     });
   };
 
-  const handleOrderStatusUpdate = () => {
+  const handleOrderStatusUpdate = (orderId, orderStatus) => {
     setLoading(true);
     updateOrderStatus(orderId, orderStatus, user.token).then((res) => {
       toast.success("Order status changed");
@@ -39,7 +39,10 @@ const AdminDashboard = () => {
         </div>
         <div className="col">
           <h4>Dashboard</h4>
-          {JSON.stringify(orders)}
+          <Orders
+            orders={orders}
+            handleStatusChange={handleOrderStatusUpdate}
+          />
         </div>
       </div>
     </div>
