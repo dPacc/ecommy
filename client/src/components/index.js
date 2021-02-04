@@ -28,3 +28,4 @@ export { default as ProductCardInCheckout } from "./cards/ProductCardInCheckout"
 export { default as SideDrawer } from "./drawer/SideDrawer";
 
 export { default as StripeCheckoutComponent } from "./StripeCheckout";
+export { default as ShowPaymentInfo } from "./cards/ShowPaymentInfo";
