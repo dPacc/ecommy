@@ -4,6 +4,8 @@ const Cart = require("../models/cart");
 const Coupon = require("../models/coupon");
 const Order = require("../models/order");
 
+const uniqueid = require("uniqueid");
+
 exports.userCart = async (req, res) => {
   const { cart } = req.body;
 
@@ -184,6 +186,64 @@ exports.removeFromWishlist = async (req, res) => {
     { $pull: { wishlist: productId } },
     { new: true }
   ).exec();
+
+  res.json({ ok: true });
+};
+
+// save COD order to database
+exports.createCashOrder = async (req, res) => {
+  const { cod } = req.body;
+
+  if (!cod)
+    return res.status(400).send("Create COD Order Failed, Send COD Status");
+
+  const user = await User.findOne({ email: req.user.email }).exec();
+
+  const { products, cartTotal, totalAfterDiscount } = await Cart.findOne({
+    orderedBy: user._id,
+  }).exec();
+
+  let payableAmount = 0;
+
+  if (totalAfterDiscount) {
+    payableAmount = totalAfterDiscount;
+  } else {
+    payableAmount = cartTotal;
+  }
+
+  // Create payment intent
+  let paymentIntent = {
+    id: uniqueid(),
+    amount: payableAmount,
+    currency: "usd",
+    status: "Cash on Delivery",
+    created: Date.now(),
+    payment_method_types: ["cash"],
+  };
+
+  // Create order with status of Cash on Delivery
+
+  let newOrder = await new Order({
+    products,
+    paymentIntent,
+    orderedBy: user._id,
+  }).save();
+
+  // decrement quantity, increment sold from product
+  const bulkOption = products.map((item) => {
+    return {
+      updateOne: {
+        filter: { _id: item.product._id },
+        update: { $inc: { quantity: -item.count, sold: +item.count } },
+      },
+    };
+  });
+
+  // Bulk write
+  let updated = await Product.bulkWrite(bulkOption, { new: true });
+  console.log("PRODUCT QUANT DEC, SOLD UPD", updated);
+
+  // console.log("NEW ORDER SAVED", newOrder);
 
   res.json({ ok: true });
 };
