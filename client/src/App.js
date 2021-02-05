@@ -42,6 +42,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   // to check firebase auth state
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -70,7 +71,7 @@ const App = () => {
   return (
     <Suspense
       fallback={
-        <div className="col text-center p-5">
+        <div className="col text-center p-5 h1">
           __ EC
           <LoadingOutlined />
           MMY __
