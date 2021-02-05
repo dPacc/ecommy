@@ -192,7 +192,7 @@ exports.removeFromWishlist = async (req, res) => {
 
 // save COD order to database
 exports.createCashOrder = async (req, res) => {
-  const { cod } = req.body;
+  const { cod, couponApplied } = req.body;
 
   if (!cod)
     return res.status(400).send("Create COD Order Failed, Send COD Status");
@@ -205,10 +205,10 @@ exports.createCashOrder = async (req, res) => {
 
   let payableAmount = 0;
 
-  if (totalAfterDiscount) {
-    payableAmount = totalAfterDiscount;
+  if (couponApplied && totalAfterDiscount) {
+    payableAmount = totalAfterDiscount * 100;
   } else {
-    payableAmount = cartTotal;
+    payableAmount = cartTotal * 100;
   }
 
   // Create payment intent
@@ -227,6 +227,7 @@ exports.createCashOrder = async (req, res) => {
     products,
     paymentIntent,
     orderedBy: user._id,
+    orderStatus: "Cash on Delivery",
   }).save();
 
   // decrement quantity, increment sold from product

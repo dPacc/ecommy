@@ -13,7 +13,6 @@ import "react-quill/dist/quill.snow.css";
 
 const Checkout = ({ history }) => {
   const dispatch = useDispatch();
-  const { user, cod } = useSelector((state) => ({ ...state }));
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [discountTotal, setDiscountTotal] = useState(0);
@@ -21,6 +20,9 @@ const Checkout = ({ history }) => {
   const [address, setAddress] = useState("");
   const [addressSaved, setAddressSaved] = useState(false);
   const [coupon, setCoupon] = useState("");
+
+  const { user, cod } = useSelector((state) => ({ ...state }));
+  const couponTrueOrFalse = useSelector((state) => state.coupon);
 
   useEffect(() => {
     getUserCart(user.token).then((res) => {
@@ -127,8 +129,35 @@ const Checkout = ({ history }) => {
   );
 
   const createCOD = () => {
-    createCodOrder(user.token, cod).then((res) => {
-      console.log("COD ORDER CREATE RESPONSE", res.data);
+    createCodOrder(user.token, cod, couponTrueOrFalse).then((res) => {
+      // console.log("COD ORDER CREATE RESPONSE", res.data);
+      if (res.data.ok) {
+        // empty user cart from local storage
+        if (typeof window !== "undefined") {
+          window.localStorage.removeItem("cart");
+        }
+        // empty user cart from redux store
+        dispatch({
+          type: "ADD_TO_CART",
+          payload: [],
+        });
+        // reset coupon to false
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: false,
+        });
+        // empty cod redux
+        dispatch({
+          type: "SET_COD",
+          payload: false,
+        });
+        // empty cart from database
+        emptyCart(user.token);
+        // redirect user
+        setTimeout(() => {
+          history.push("/user/history");
+        }, 1000);
+      }
     });
   };
 
