@@ -107,3 +107,16 @@ export const addWishlist = async (productId, authtoken) => {
     }
   );
 };
+
+// create cod order
+export const createCodOrder = async (authtoken, cod) => {
+  return await axios.post(
+    `${process.env.REACT_APP_BACKEND_API}/user/cash-order`,
+    { cod },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};

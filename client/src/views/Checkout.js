@@ -4,6 +4,7 @@ import {
   emptyCart,
   saveUserAddress,
   applyCoupon,
+  createCodOrder,
 } from "../api/user";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -12,7 +13,7 @@ import "react-quill/dist/quill.snow.css";
 
 const Checkout = ({ history }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, cod } = useSelector((state) => ({ ...state }));
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [discountTotal, setDiscountTotal] = useState(0);
@@ -125,6 +126,12 @@ const Checkout = ({ history }) => {
     </>
   );
 
+  const createCOD = () => {
+    createCodOrder(user.token, cod).then((res) => {
+      console.log("COD ORDER CREATE RESPONSE", res.data);
+    });
+  };
+
   return (
     <div className="row">
       <div className="col-md-6">
@@ -155,13 +162,23 @@ const Checkout = ({ history }) => {
 
         <div className="row">
           <div className="col-md-6">
-            <button
-              disabled={!addressSaved || !products.length}
-              className="btn btn-primary"
-              onClick={() => history.push("/payment")}
-            >
-              Place Order
-            </button>
+            {cod ? (
+              <button
+                disabled={!addressSaved || !products.length}
+                className="btn btn-primary"
+                onClick={createCOD}
+              >
+                Place Order
+              </button>
+            ) : (
+              <button
+                disabled={!addressSaved || !products.length}
+                className="btn btn-primary"
+                onClick={() => history.push("/payment")}
+              >
+                Place Order
+              </button>
+            )}
           </div>
 
           <div className="col-md-6">
