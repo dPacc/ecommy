@@ -1,9 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
+import { lazily } from "react-lazily";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { auth } from "./firebase";
+import { useDispatch } from "react-redux";
+import { currentUser } from "./api/auth";
+import { LoadingOutlined } from "@ant-design/icons";
 
-import {
+const {
   Login,
   Register,
   Home,
@@ -28,13 +33,10 @@ import {
   Checkout,
   CreateCoupon,
   Payment,
-} from "./views";
-import { Header, UserRoute, AdminRoute, SideDrawer } from "./components";
-
-import { auth } from "./firebase";
-import { useDispatch } from "react-redux";
-
-import { currentUser } from "./api/auth";
+} = lazily(() => import("./views"));
+const { Header, UserRoute, AdminRoute, SideDrawer } = lazily(() =>
+  import("./components")
+);
 
 const App = () => {
   const dispatch = useDispatch();
@@ -66,7 +68,15 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <Suspense
+      fallback={
+        <div className="col text-center p-5">
+          __ EC
+          <LoadingOutlined />
+          MMY __
+        </div>
+      }
+    >
       <Header />
       <ToastContainer />
       <SideDrawer />
@@ -116,7 +126,7 @@ const App = () => {
         <UserRoute exact path="/checkout" component={Checkout} />
         <UserRoute exact path="/payment" component={Payment} />
       </Switch>
-    </>
+    </Suspense>
   );
 };
 
